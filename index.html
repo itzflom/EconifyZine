@@ -725,6 +725,14 @@
     const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     document.getElementById('nlForm').addEventListener('submit', (e) => { e.preventDefault(); const btn = document.getElementById('nlBtn'); const input = e.target.querySelector('input'); btn.textContent = "You're in ✓"; btn.style.background = 'oklch(40% 0.14 145)'; input.value = ''; setTimeout(() => { btn.textContent = 'Subscribe →'; btn.style.background = ''; }, 3500); });
+    document.querySelectorAll('img[src^="images/"]').forEach(img => {
+      img.addEventListener('error', function handler() {
+        this.removeEventListener('error', handler);
+        const url = this.getAttribute('src');
+        if (!url || url.startsWith('data:')) return;
+        fetch(url).then(r => r.text()).then(b64 => { this.src = 'data:image/jpeg;base64,' + b64.trim(); }).catch(() => {});
+      });
+    });
   </script>
 </body>
 </html>
