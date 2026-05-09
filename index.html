@@ -31,6 +31,7 @@
     ul { list-style: none; }
     button { cursor: pointer; background: none; border: none; }
     img { display: block; max-width: 100%; }
+
     .wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
     .eyebrow { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); }
     .section-bar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
@@ -45,8 +46,10 @@
     .btn-ghost:hover { border-color: var(--red); color: var(--red); }
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
     .reveal.in { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .ticker-track { animation-play-state: paused; } }
+
+    /* NAV */
     .nav { position: sticky; top: 0; z-index: 200; background: var(--bg); border-bottom: 1px solid var(--rule); transition: box-shadow 0.3s; }
     .nav.lifted { box-shadow: 0 4px 32px oklch(0% 0 0 / 0.06); }
     .nav-inner { height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
@@ -67,12 +70,16 @@
     .mobile-drawer a:hover { color: var(--red); }
     .mobile-drawer .drawer-contact { margin-top: 2rem; font-family: var(--f-ui); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
     .mobile-drawer .drawer-contact a { font-family: var(--f-ui); font-size: 0.85rem; font-weight: 600; border: none; padding: 0; color: var(--red); letter-spacing: 0; text-transform: none; }
+
+    /* TICKER */
     .ticker { background: var(--red); overflow: hidden; padding: 0.55rem 0; white-space: nowrap; user-select: none; }
     .ticker-track { display: inline-flex; animation: scroll-ticker 36s linear infinite; }
     .ticker-item { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: oklch(96% 0.01 75); padding: 0 2.5rem; }
     .ticker-sep { opacity: 0.35; }
     @keyframes scroll-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .hero { padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 5rem); }
+
+    /* HERO */
+    .hero { padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 5rem); overflow: hidden; }
     .hero-pre { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
     .hero-pre-line { width: 40px; height: 1px; background: var(--red); }
     .hero-headline { font-family: var(--f-display); font-size: clamp(4rem, 11vw, 11rem); font-weight: 900; line-height: 0.88; letter-spacing: -0.035em; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
@@ -84,28 +91,79 @@
     .hero-num-item { display: flex; flex-direction: column; }
     .hero-num-val { font-family: var(--f-display); font-size: 2.4rem; font-weight: 800; line-height: 1; color: var(--red); }
     .hero-num-label { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-top: 0.2rem; }
-    .achievement-bar { background: var(--bg-warm); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 1rem 0; }
-    .achievement-inner { display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-    .achievement-item { display: flex; align-items: center; gap: 0.75rem; }
-    .achievement-icon { width: 32px; height: 32px; background: var(--red); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; color: white; }
+
+    /* ACHIEVEMENT BADGE */
+    .achievement-bar {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 1rem 0;
+    }
+    .achievement-inner {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .achievement-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      color: white;
+    }
     .achievement-text { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 600; color: var(--ink-mid); max-width: 28ch; line-height: 1.4; }
     .achievement-text strong { color: var(--ink); }
     .achievement-sep { width: 1px; height: 28px; background: var(--rule); }
+
+    /* ISSUE 01 SPOTLIGHT */
     .issue-spotlight { padding: clamp(3rem, 6vw, 5.5rem) 0; border-bottom: 1px solid var(--rule); }
     .spotlight-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
-    .spotlight-cover { position: relative; }
-    .spotlight-cover img { width: 100%; max-width: 420px; box-shadow: 12px 16px 48px oklch(0% 0 0 / 0.14); }
-    .spotlight-cover-badge { position: absolute; top: -0.75rem; right: -0.75rem; background: var(--red); color: oklch(97% 0.01 75); font-family: var(--f-ui); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 0.7rem; }
+    .spotlight-cover {
+      position: relative;
+    }
+    .spotlight-cover img {
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 12px 16px 48px oklch(0% 0 0 / 0.14);
+    }
+    .spotlight-cover-badge {
+      position: absolute;
+      top: -0.75rem;
+      right: -0.75rem;
+      background: var(--red);
+      color: oklch(97% 0.01 75);
+      font-family: var(--f-ui);
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.7rem;
+    }
+    .spotlight-content {}
+    .spotlight-issue-label { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .spotlight-num { font-family: var(--f-display); font-size: 1rem; font-weight: 700; color: var(--red); }
     .spotlight-title { font-family: var(--f-display); font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1rem; }
     .spotlight-sub { font-size: 0.975rem; color: var(--ink-mid); max-width: 52ch; line-height: 1.75; margin-bottom: 1.75rem; }
-    .spotlight-sections { display: flex; flex-direction: column; }
+    .spotlight-sections { display: flex; flex-direction: column; gap: 0; }
     .spotlight-sec-item { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
     .spotlight-sec-item:first-child { border-top: 1px solid var(--rule); }
     .spotlight-sec-tag { font-family: var(--f-ui); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 0.15rem 0.45rem; flex-shrink: 0; }
     .spotlight-sec-tag.accent { background: var(--red); }
     .spotlight-sec-title { font-family: var(--f-display); font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+
+    /* ARTICLES MOSAIC */
     .articles { padding: clamp(3rem, 6vw, 5rem) 0; }
-    .mosaic { display: grid; grid-template-columns: 1fr; border: 1px solid var(--rule); }
+    .mosaic { display: grid; grid-template-columns: 1fr; border: 1px solid var(--rule); gap: 0; }
     .mosaic-cell { padding: clamp(1.25rem, 2.5vw, 2rem); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
     .mosaic-cell:last-child { border-bottom: none; }
     .mosaic-cell:hover { background: var(--red-pale); }
@@ -116,10 +174,12 @@
     .art-title { font-family: var(--f-display); font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 0.6rem; transition: color 0.2s; }
     .mosaic-cell:hover .art-title { color: var(--red); }
     .art-excerpt { font-size: 0.9rem; color: var(--ink-mid); max-width: 62ch; margin-bottom: 0.9rem; line-height: 1.7; }
-    .art-byline { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 600; color: var(--ink-faint); }
+    .art-byline { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 600; color: var(--ink-faint); letter-spacing: 0.04em; }
+
+    /* ABOUT */
     .about { padding: clamp(3.5rem, 7vw, 7rem) 0; background: var(--bg-warm); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
     .about-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 5vw, 5rem); }
-    .about-pull { font-family: var(--f-display); font-size: clamp(1.5rem, 3vw, 2.2rem); font-style: italic; font-weight: 300; line-height: 1.4; border-top: 3px solid var(--red); padding-top: 1.5rem; margin-bottom: 1.75rem; }
+    .about-pull { font-family: var(--f-display); font-size: clamp(1.5rem, 3vw, 2.2rem); font-style: italic; font-weight: 300; line-height: 1.4; border-top: 3px solid var(--red); padding-top: 1.5rem; margin-bottom: 1.75rem; color: var(--ink); }
     .about-body { font-size: 0.975rem; color: var(--ink-mid); max-width: 58ch; line-height: 1.85; }
     .about-body p + p { margin-top: 1rem; }
     .about-pillars { display: flex; flex-direction: column; }
@@ -128,58 +188,93 @@
     .pillar-num { font-family: var(--f-display); font-size: 3.5rem; font-weight: 900; color: var(--red); opacity: 0.2; line-height: 1; margin-bottom: 0.25rem; }
     .pillar-title { font-family: var(--f-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
     .pillar-desc { font-size: 0.875rem; color: var(--ink-mid); max-width: 38ch; line-height: 1.65; }
+
+    /* FOUNDER'S NOTE */
     .founders-note { padding: clamp(3.5rem, 7vw, 7rem) 0; border-bottom: 1px solid var(--rule); }
     .founders-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 5vw, 4rem); align-items: start; }
-    .founders-letter-img img { width: 100%; max-width: 480px; box-shadow: 8px 12px 40px oklch(0% 0 0 / 0.1); }
-    .founders-quote { font-family: var(--f-display); font-size: clamp(1.25rem, 2.8vw, 1.9rem); font-style: italic; font-weight: 300; line-height: 1.45; border-left: 3px solid var(--red); padding-left: 1.25rem; margin-bottom: 1.5rem; }
+    .founders-letter-img {
+      position: relative;
+      max-width: 480px;
+    }
+    .founders-letter-img img { width: 100%; box-shadow: 8px 12px 40px oklch(0% 0 0 / 0.1); }
+    .founders-content {}
+    .founders-quote {
+      font-family: var(--f-display);
+      font-size: clamp(1.25rem, 2.8vw, 1.9rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--ink);
+      border-left: 3px solid var(--red);
+      padding-left: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
     .founders-text { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.85; max-width: 58ch; }
     .founders-text p + p { margin-top: 1rem; }
-    .founders-sig { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
-    .founders-sig-name { font-family: var(--f-display); font-size: 1.2rem; font-weight: 700; font-style: italic; }
+    .founders-sig {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .founders-sig-name { font-family: var(--f-display); font-size: 1.2rem; font-weight: 700; font-style: italic; color: var(--ink); }
     .founders-sig-role { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); }
+
+    /* Q&A FEATURE */
     .qa-feature { background: var(--bg-dark); color: oklch(92% 0.012 75); padding: clamp(3rem, 6vw, 5.5rem) 0; }
     .qa-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
     .qa-photo-wrap { max-width: 320px; }
     .qa-photo { width: 100%; }
     .qa-label { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
     .qa-name { font-family: var(--f-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: oklch(92% 0.012 75); margin-bottom: 0.5rem; }
-    .qa-title { font-family: var(--f-ui); font-size: 0.8rem; font-weight: 600; color: oklch(55% 0.01 75); margin-bottom: 1.5rem; line-height: 1.5; max-width: 42ch; }
+    .qa-title { font-family: var(--f-ui); font-size: 0.8rem; font-weight: 600; color: oklch(55% 0.01 75); letter-spacing: 0.04em; margin-bottom: 1.5rem; line-height: 1.5; max-width: 42ch; }
     .qa-bio { font-size: 0.9rem; color: oklch(62% 0.01 75); line-height: 1.8; max-width: 52ch; }
     .qa-note { margin-top: 1.5rem; font-family: var(--f-display); font-size: 1rem; font-style: italic; font-weight: 300; color: oklch(72% 0.01 75); border-top: 1px solid oklch(25% 0.01 75); padding-top: 1.25rem; max-width: 48ch; line-height: 1.55; }
+
+    /* ISSUES */
     .issues { padding: clamp(3.5rem, 7vw, 7rem) 0; }
     .issues-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
     .issue-card { border: 1px solid var(--rule); padding: clamp(1.5rem, 3vw, 2.5rem); }
     .issue-top { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
     .issue-big-num { font-family: var(--f-display); font-size: 7rem; font-weight: 900; line-height: 0.8; color: var(--red); opacity: 0.12; flex-shrink: 0; user-select: none; }
-    .issue-theme { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
     .issue-title { font-family: var(--f-display); font-size: 2rem; font-weight: 700; line-height: 1.1; margin-bottom: 0.5rem; }
+    .issue-theme { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
     .issue-sub { font-size: 0.9rem; color: var(--ink-mid); max-width: 48ch; }
-    .issue-coming { background: var(--bg-warm); display: flex; align-items: center; justify-content: center; min-height: 140px; flex-direction: column; gap: 0.5rem; }
-    .issue-coming-label { font-family: var(--f-display); font-size: 1.5rem; font-weight: 700; color: var(--ink-faint); }
-    .issue-coming-sub { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); }
+    .issue-card-coming { background: var(--bg-warm); display: flex; align-items: center; justify-content: center; min-height: 180px; flex-direction: column; gap: 0.75rem; }
+    .issue-card-coming-label { font-family: var(--f-display); font-size: 1.5rem; font-weight: 700; color: var(--ink-faint); }
+    .issue-card-coming-sub { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); }
     .writers-label { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.85rem; }
     .writers { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .writer { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 600; background: var(--bg); border: 1px solid var(--rule); padding: 0.3rem 0.7rem; color: var(--ink-mid); transition: border-color 0.2s; }
+    .writer { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; background: var(--bg); border: 1px solid var(--rule); padding: 0.3rem 0.7rem; color: var(--ink-mid); transition: border-color 0.2s, color 0.2s; }
     .issue-card:hover .writer { border-color: oklch(80% 0.02 24); }
+
+    /* TEAM */
     .team { padding: clamp(3.5rem, 7vw, 7rem) 0; border-top: 1px solid var(--rule); }
     .team-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-bottom: 2.5rem; }
     .member { padding: 1.25rem 0; border-bottom: 1px solid var(--rule); }
     .member:first-child { border-top: 1px solid var(--rule); }
-    .member-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .member-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; }
     .member-name { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; }
     .member-role { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); white-space: nowrap; }
     .member-bio { font-size: 0.85rem; color: var(--ink-mid); max-width: 68ch; line-height: 1.65; }
-    .writers-section { padding: clamp(2.5rem, 5vw, 4rem) 0; border-top: 1px solid var(--rule); }
-    .writers-grid { display: grid; grid-template-columns: 1fr; }
-    .writer-row { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+
+    /* WRITERS GRID */
+    .writers-section { padding: clamp(3rem, 5vw, 5rem) 0; border-top: 1px solid var(--rule); }
+    .writers-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+    .writer-row { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 0.3rem; }
     .writer-row:first-child { border-top: 1px solid var(--rule); }
-    .writer-row-name { font-family: var(--f-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .writer-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+    .writer-row-name { font-family: var(--f-display); font-size: 1rem; font-weight: 600; color: var(--ink); }
     .writer-row-desc { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; max-width: 72ch; }
+
+    /* JOIN */
     .join { background: var(--bg-dark); color: oklch(92% 0.012 75); padding: clamp(4rem, 8vw, 8rem) 0; }
     .join-headline { font-family: var(--f-display); font-size: clamp(3rem, 7.5vw, 7rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
     .join-headline em { color: var(--red); font-style: italic; font-weight: 300; }
     .join-sub { font-size: 1rem; color: oklch(62% 0.01 75); max-width: 48ch; line-height: 1.75; margin-bottom: 3rem; }
-    .join-ways { display: grid; grid-template-columns: 1fr; border: 1px solid oklch(22% 0.01 75); }
+    .join-ways { display: grid; grid-template-columns: 1fr; border: 1px solid oklch(22% 0.01 75); gap: 0; }
     .way { padding: clamp(1.5rem, 3vw, 2.25rem); border-bottom: 1px solid oklch(22% 0.01 75); transition: background 0.2s; }
     .way:last-child { border-bottom: none; }
     .way:hover { background: oklch(17% 0.015 75); }
@@ -194,6 +289,8 @@
     .newsletter-input::placeholder { color: oklch(40% 0.01 75); }
     .newsletter-submit { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--red); color: oklch(97% 0.01 75); border: none; padding: 0.9rem 1.75rem; transition: opacity 0.2s; align-self: flex-start; white-space: nowrap; }
     .newsletter-submit:hover { opacity: 0.82; }
+
+    /* FOOTER */
     .footer { border-top: 1px solid var(--rule); padding: clamp(3rem, 6vw, 5rem) 0 2rem; }
     .footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem; }
     .footer-logo { font-family: var(--f-ui); font-size: 1.4rem; font-weight: 800; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
@@ -208,6 +305,8 @@
     .footer-socials { display: flex; gap: 1.5rem; }
     .footer-socials a { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); transition: color 0.2s; }
     .footer-socials a:hover { color: var(--red); }
+
+    /* BREAKPOINTS */
     @media (min-width: 600px) { .newsletter-form { flex-direction: row; } }
     @media (min-width: 768px) {
       .nav-links { display: flex; } .hamburger { display: none; }
@@ -231,8 +330,8 @@
     }
     @media (min-width: 1024px) {
       .mosaic { grid-template-columns: repeat(3, 1fr); }
-      .mosaic-cell.large { grid-column: 1 / 3; display: grid; grid-template-columns: 1fr 1fr; }
-      .mosaic-cell.large .art-sidebar { padding-left: clamp(1.25rem, 2.5vw, 2rem); border-left: 1px solid var(--rule); display: flex; flex-direction: column; }
+      .mosaic-cell.large { grid-column: 1 / 3; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+      .mosaic-cell.large .art-sidebar { padding-left: clamp(1.25rem, 2.5vw, 2rem); border-left: 1px solid var(--rule); display: flex; flex-direction: column; gap: 0; }
       .sidebar-item { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
       .sidebar-item:first-child { padding-top: 0; } .sidebar-item:last-child { border-bottom: none; }
       .mosaic-cell.large .art-primary { padding-right: clamp(1.25rem, 2.5vw, 2rem); }
@@ -241,6 +340,7 @@
 </head>
 <body>
 
+  <!-- NAV -->
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="#" class="nav-logo">ECONIFY<em>.</em>ZINE</a>
@@ -259,7 +359,7 @@
     </div>
   </header>
 
-  <nav class="mobile-drawer" id="drawer">
+  <nav class="mobile-drawer" id="drawer" aria-label="Mobile navigation">
     <a href="#about" onclick="closeDrawer()">About</a>
     <a href="#edition-01" onclick="closeDrawer()">Edition 01</a>
     <a href="#founders-note" onclick="closeDrawer()">Founders</a>
@@ -269,21 +369,23 @@
     <div class="drawer-contact"><div style="margin-bottom:0.4rem">Get in touch</div><a href="mailto:econify.zine@gmail.com">econify.zine@gmail.com</a></div>
   </nav>
 
+  <!-- TICKER -->
   <div class="ticker" aria-hidden="true"><div class="ticker-track">
     <span class="ticker-item">Economics, Unfiltered</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">The Price of Power — Edition 01</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">Recognised by the UK Foreign Commonwealth Office</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">Student-Led Analysis</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">No Jargon, No Fear</span><span class="ticker-item ticker-sep">◆</span>
-    <span class="ticker-item">Q&amp;A with Prof. Bhimani — LSE</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Featuring a Q&amp;A with Prof. Bhimani — LSE</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">Economics, Unfiltered</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">The Price of Power — Edition 01</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">Recognised by the UK Foreign Commonwealth Office</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">Student-Led Analysis</span><span class="ticker-item ticker-sep">◆</span>
     <span class="ticker-item">No Jargon, No Fear</span><span class="ticker-item ticker-sep">◆</span>
-    <span class="ticker-item">Q&amp;A with Prof. Bhimani — LSE</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Featuring a Q&amp;A with Prof. Bhimani — LSE</span><span class="ticker-item ticker-sep">◆</span>
   </div></div>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap">
       <div class="hero-pre reveal"><div class="hero-pre-line"></div><span class="eyebrow">Student Economics Publication</span></div>
@@ -303,16 +405,29 @@
     </div>
   </section>
 
+  <!-- ACHIEVEMENT BAR -->
   <div class="achievement-bar reveal">
-    <div class="wrap"><div class="achievement-inner">
-      <div class="achievement-item"><div class="achievement-icon">★</div><p class="achievement-text"><strong>Essay recognised</strong> by the UK Foreign, Commonwealth &amp; Development Office</p></div>
-      <div class="achievement-sep"></div>
-      <div class="achievement-item"><div class="achievement-icon">◈</div><p class="achievement-text"><strong>Q&amp;A</strong> with Prof. Alnoor Bhimani, LSE Professor &amp; CPA</p></div>
-      <div class="achievement-sep"></div>
-      <div class="achievement-item"><div class="achievement-icon">✦</div><p class="achievement-text"><strong>Written by students</strong> globally — Geneva to Jakarta to New Delhi</p></div>
-    </div></div>
+    <div class="wrap">
+      <div class="achievement-inner">
+        <div class="achievement-item">
+          <div class="achievement-icon">★</div>
+          <p class="achievement-text"><strong>Essay recognised</strong> by the UK Foreign, Commonwealth &amp; Development Office</p>
+        </div>
+        <div class="achievement-sep"></div>
+        <div class="achievement-item">
+          <div class="achievement-icon">◈</div>
+          <p class="achievement-text"><strong>Featuring a Q&amp;A</strong> with Prof. Alnoor Bhimani, LSE Professor &amp; CPA</p>
+        </div>
+        <div class="achievement-sep"></div>
+        <div class="achievement-item">
+          <div class="achievement-icon">✦</div>
+          <p class="achievement-text"><strong>Works written</strong> by students globally — Geneva to Jakarta to New Delhi</p>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- EDITION 01 SPOTLIGHT -->
   <section class="issue-spotlight" id="edition-01">
     <div class="wrap">
       <div class="section-bar reveal"><span class="eyebrow">Now Available</span></div>
@@ -321,10 +436,13 @@
           <img src="images/cover-ed1.jpg" alt="Econify Zine Edition 01 — The Price of Power" loading="lazy">
           <div class="spotlight-cover-badge">Edition 01 · 2026</div>
         </div>
-        <div class="reveal d1">
-          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;"><span class="eyebrow">First Edition</span><span style="font-family:var(--f-ui);font-size:0.68rem;color:var(--ink-faint)">2026</span></div>
+        <div class="spotlight-content reveal d1">
+          <div class="spotlight-issue-label">
+            <span class="eyebrow">First Edition</span>
+            <span style="font-family:var(--f-ui);font-size:0.68rem;color:var(--ink-faint)">2026</span>
+          </div>
           <h2 class="spotlight-title">The Price<br>of Power</h2>
-          <p class="spotlight-sub">Power is never free. Nations pay for it with the strength of their institutions. Markets pay for it with uncertainty. Individuals pay for it with trust — the most fragile currency of all. This edition traces those hidden lines.</p>
+          <p class="spotlight-sub">Power is never free. Nations pay for it with the strength of their institutions. Markets pay for it with uncertainty. Individuals pay for it with trust, the most fragile currency of all. This edition traces the hidden lines between influence and inequality, between ambition and accountability.</p>
           <div class="spotlight-sections">
             <div class="spotlight-sec-item"><span class="spotlight-sec-tag accent">Political Economy</span><span class="spotlight-sec-title">The Price of Protection: Power, Trade, and the UK's Strategic Dilemma</span></div>
             <div class="spotlight-sec-item"><span class="spotlight-sec-tag">Int'l Relations</span><span class="spotlight-sec-title">Debt Diplomacy: The Economic Price of Power in China's BRI</span></div>
@@ -338,9 +456,10 @@
     </div>
   </section>
 
+  <!-- ARTICLES MOSAIC -->
   <section class="articles">
     <div class="wrap">
-      <div class="section-bar reveal"><span class="eyebrow">From Edition 01</span><a href="#edition-01" class="section-bar-right">All articles →</a></div>
+      <div class="section-bar reveal"><span class="eyebrow">From Edition 01</span><a href="#edition-01" class="section-bar-right">View all articles →</a></div>
       <div class="mosaic">
         <article class="mosaic-cell large reveal">
           <div class="art-primary">
@@ -362,6 +481,7 @@
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section class="about" id="about">
     <div class="wrap">
       <div class="section-bar reveal"><span class="eyebrow">About the Zine</span></div>
@@ -383,6 +503,7 @@
     </div>
   </section>
 
+  <!-- FOUNDER'S NOTE -->
   <section class="founders-note" id="founders-note">
     <div class="wrap">
       <div class="section-bar reveal"><span class="eyebrow">Founder's Note</span></div>
@@ -390,8 +511,10 @@
         <div class="founders-letter-img reveal">
           <img src="images/founders-letter.jpg" alt="Founder's letter from Alessa Efridya Ningtyas" loading="lazy">
         </div>
-        <div class="reveal d1">
-          <blockquote class="founders-quote">"Power is never free. Nations pay for it with the strength of their institutions. Markets pay for it with uncertainty. Individuals pay for it with trust — the most fragile currency of all."</blockquote>
+        <div class="founders-content reveal d1">
+          <blockquote class="founders-quote">
+            "Power is never free. Nations pay for it with the strength of their institutions. Markets pay for it with uncertainty. Individuals pay for it with trust — the most fragile currency of all."
+          </blockquote>
           <div class="founders-text">
             <p>There's a moment, quiet, almost imperceptible, when the world shifts. When you realise that so much of what we call power isn't natural or inevitable, but something far more fragile: a collective agreement. A shared illusion. An arrangement we accept because everyone else seems to accept it too.</p>
             <p>Econify Zine was born from this moment of questioning — from the desire to understand the real cost of the systems we live in. Our first edition, <em>The Price of Power</em>, is an invitation to look beyond the surface, to trace the hidden lines between influence and inequality, between ambition and accountability.</p>
@@ -399,17 +522,20 @@
             <p>Enjoy this issue, and keep questioning.</p>
           </div>
           <div class="founders-sig">
-            <div class="founders-sig-name">Alessa Efridya Ningtyas</div>
-            <div class="founders-sig-role">Founder &amp; Chief Editor</div>
+            <span class="founders-sig-name">Alessa Efridya Ningtyas</span>
+            <span class="founders-sig-role">Founder &amp; Chief Editor</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Q&A FEATURE -->
   <section class="qa-feature">
     <div class="wrap">
-      <div class="section-bar reveal" style="border-bottom-color:oklch(25% 0.01 75);"><span class="eyebrow">Featured in Edition 01</span></div>
+      <div class="section-bar reveal" style="border-bottom-color:oklch(25% 0.01 75);margin-bottom:2.5rem;">
+        <span class="eyebrow">Featured in Edition 01</span>
+      </div>
       <div class="qa-grid">
         <div class="qa-photo-wrap reveal">
           <img class="qa-photo" src="images/qa-bhimani.jpg" alt="Professor Alnoor Bhimani" loading="lazy">
@@ -417,63 +543,146 @@
         <div class="reveal d1">
           <div class="qa-label">Q&amp;A</div>
           <h2 class="qa-name">Prof. Alnoor Bhimani</h2>
-          <p class="qa-title">Professor of Management Accounting, London School of Economics · Former Head of LSE's Department of Accounting · Founding Director of LSE Entrepreneurship</p>
-          <p class="qa-bio">Prof. Bhimani's research covers financial controls and management, AI and digitilisation aspects of globalisation, governance and economic growth. He sits on university advisory boards across Europe, Africa, America and Asia. Canadian CPA; MBA from Cornell University; PhD from LSE.</p>
+          <p class="qa-title">Professor of Management Accounting, London School of Economics and Political Science · Former Head of LSE's Department of Accounting · Founding Director of LSE Entrepreneurship</p>
+          <p class="qa-bio">Prof. Bhimani's research deals with financial controls and management, AI and digitilisation aspects of globalisation, governance and economic growth. He sits on university advisory boards across Europe, Africa, America and Asia. He is a Canadian CPA with an MBA from Cornell University and a PhD from LSE.</p>
           <p class="qa-note">"An invitation to look beyond the surface, to trace the hidden lines between influence and inequality, between the people who rule and the people who suffer the consequences."</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ISSUES -->
   <section class="issues" id="issues">
     <div class="wrap">
       <div class="section-bar reveal"><span class="eyebrow">Our Issues</span></div>
       <div class="issues-grid">
+        <!-- Issue 01 -->
         <div class="issue-card reveal">
-          <div class="issue-top"><div class="issue-big-num" aria-hidden="true">01</div><div><div class="issue-theme">The Price of Power</div><h3 class="issue-title">First Edition</h3><p class="issue-sub">16 writers. 6 topic areas. One question: what does power actually cost — and who pays?</p></div></div>
+          <div class="issue-top">
+            <div class="issue-big-num" aria-hidden="true">01</div>
+            <div>
+              <div class="issue-theme">The Price of Power</div>
+              <h3 class="issue-title">First Edition</h3>
+              <p class="issue-sub">16 writers. 6 topic areas. One question: what does power actually cost — and who pays?</p>
+            </div>
+          </div>
           <div class="writers-label">Writing Team</div>
-          <div class="writers"><span class="writer">Alessa Efridya Ningtyas</span><span class="writer">Alex Victoria Shimokawa Razon</span><span class="writer">Tusharika Sharma</span><span class="writer">Sameera Vyas</span><span class="writer">Rani Ebigael Simanjuntak</span><span class="writer">Isbilya Nathifa Erindra</span><span class="writer">Aurelia Permatasari</span><span class="writer">Cheryl Kirana Sungkono</span><span class="writer">Rassul Zhunussov</span><span class="writer">David Abubakirov</span><span class="writer">Jiyhan Kayfa Zahrah</span><span class="writer">Gelya Dima</span><span class="writer">John Kirkman</span><span class="writer">Elijah Meyer</span><span class="writer">Nathaniel Tirtawijaya</span><span class="writer">Adiya Dias</span></div>
+          <div class="writers">
+            <span class="writer">Alessa Efridya Ningtyas</span><span class="writer">Alex Victoria Shimokawa Razon</span><span class="writer">Tusharika Sharma</span><span class="writer">Sameera Vyas</span><span class="writer">Rani Ebigael Simanjuntak</span><span class="writer">Isbilya Nathifa Erindra</span><span class="writer">Aurelia Permatasari</span><span class="writer">Cheryl Kirana Sungkono</span><span class="writer">Rassul Zhunussov</span><span class="writer">David Abubakirov</span><span class="writer">Jiyhan Kayfa Zahrah</span><span class="writer">Gelya Dima</span><span class="writer">John Kirkman</span><span class="writer">Elijah Meyer</span><span class="writer">Nathaniel Tirtawijaya</span><span class="writer">Adiya Dias</span>
+          </div>
         </div>
+        <!-- Issue 02 — coming -->
         <div class="issue-card reveal d2">
-          <div class="issue-top"><div class="issue-big-num" aria-hidden="true">02</div><div><div class="issue-theme" style="color:var(--ink-faint)">Theme TBA</div><h3 class="issue-title">Second Edition</h3><p class="issue-sub">Growing stronger — 24 writers ready to push deeper into the questions that matter.</p></div></div>
-          <div class="issue-coming"><span class="issue-coming-label">Coming Soon</span><span class="issue-coming-sub">Writers confirmed · Theme in development</span></div>
-          <div style="margin-top:1.5rem;"><div class="writers-label">Writing Team</div><div class="writers"><span class="writer">Alessa Efridya Ningtyas</span><span class="writer">Alex Victoria Shimokawa Razon</span><span class="writer">Tusharika Sharma</span><span class="writer">Sameera Vyas</span><span class="writer">Rani Ebigael Simanjuntak</span><span class="writer">Isbilya Nathifa Erindra</span><span class="writer">Aurelia Permatasari</span><span class="writer">Cheryl Kirana Sungkono</span><span class="writer">Rassul Zhunussov</span><span class="writer">David Abubakirov</span><span class="writer">Jiyhan Kayfa Zahrah</span><span class="writer">Gelya Dima</span><span class="writer">John Kirkman</span><span class="writer">Elijah Meyer</span><span class="writer">Nathaniel Tirtawijaya</span><span class="writer">Eshan Kewal</span><span class="writer">Ameer Hyder</span><span class="writer">Winston Subali</span><span class="writer">Michelle Wijaya</span><span class="writer">Ace</span><span class="writer">Atha</span><span class="writer">Madina</span><span class="writer">Sofia</span><span class="writer">Adiya Dias</span></div></div>
+          <div class="issue-top">
+            <div class="issue-big-num" aria-hidden="true">02</div>
+            <div>
+              <div class="issue-theme" style="color:var(--ink-faint)">Theme TBA</div>
+              <h3 class="issue-title">Second Edition</h3>
+              <p class="issue-sub">Growing stronger — 24 writers ready to push deeper into the questions that matter.</p>
+            </div>
+          </div>
+          <div class="issue-card-coming">
+            <span class="issue-card-coming-label">Coming Soon</span>
+            <span class="issue-card-coming-sub">Writers confirmed · Theme in development</span>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <div class="writers-label">Writing Team</div>
+            <div class="writers">
+              <span class="writer">Alessa Efridya Ningtyas</span><span class="writer">Alex Victoria Shimokawa Razon</span><span class="writer">Tusharika Sharma</span><span class="writer">Sameera Vyas</span><span class="writer">Rani Ebigael Simanjuntak</span><span class="writer">Isbilya Nathifa Erindra</span><span class="writer">Aurelia Permatasari</span><span class="writer">Cheryl Kirana Sungkono</span><span class="writer">Rassul Zhunussov</span><span class="writer">David Abubakirov</span><span class="writer">Jiyhan Kayfa Zahrah</span><span class="writer">Gelya Dima</span><span class="writer">John Kirkman</span><span class="writer">Elijah Meyer</span><span class="writer">Nathaniel Tirtawijaya</span><span class="writer">Eshan Kewal</span><span class="writer">Ameer Hyder</span><span class="writer">Winston Subali</span><span class="writer">Michelle Wijaya</span><span class="writer">Ace</span><span class="writer">Atha</span><span class="writer">Madina</span><span class="writer">Sofia</span><span class="writer">Adiya Dias</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- TEAM -->
   <section class="team" id="team">
     <div class="wrap">
       <div class="section-bar reveal"><span class="eyebrow">Meet the Team</span></div>
       <div class="team-list">
-        <div class="member reveal"><div class="member-top"><span class="member-name">Alessa Efridya Ningtyas</span><span class="member-role">Founder &amp; Chief Editor</span></div><p class="member-bio">Year 12, Jakarta, Indonesia. PPE student who thinks about philosophy before breakfast and economics before bed. Gravitates toward books that question rationality and the complexities of human decision-making — which explains how she ended up creating this magazine.</p></div>
-        <div class="member reveal d1"><div class="member-top"><span class="member-name">Fionna Onggoputri</span><span class="member-role">Graphic Design</span></div><p class="member-bio">Grade 10. Strong academic interest in computer science, exploring how creativity and logical thinking come together to shape innovative projects. Avid gamer — FPS and open-world RPGs — drawing design inspiration from their storytelling.</p></div>
-        <div class="member reveal d2"><div class="member-top"><span class="member-name">Cherisse Tendean</span><span class="member-role">Graphic Design &amp; Editing</span></div><p class="member-bio">Year 12, Indonesia and Australia. Experimental multimedia art, shifting between whimsical visuals and modern graphic design. Collects record players and cassettes, and creates her own music behind-the-scenes.</p></div>
+        <div class="member reveal">
+          <div class="member-top"><span class="member-name">Alessa Efridya Ningtyas</span><span class="member-role">Founder &amp; Chief Editor</span></div>
+          <p class="member-bio">Year 12, Jakarta, Indonesia. PPE student who thinks about philosophy before breakfast and economics before bed. Gravitates toward books that question rationality and the complexities of human decision-making — which explains how she ended up creating this magazine.</p>
+        </div>
+        <div class="member reveal d1">
+          <div class="member-top"><span class="member-name">Fionna Onggoputri</span><span class="member-role">Graphic Design</span></div>
+          <p class="member-bio">Grade 10. Strong academic interest in computer science, where she explores how creativity and logical thinking come together to shape innovative projects. Avid gamer — FPS and immersive open-world RPGs — drawing design inspiration from their storytelling.</p>
+        </div>
+        <div class="member reveal d2">
+          <div class="member-top"><span class="member-name">Cherisse Tendean</span><span class="member-role">Graphic Design &amp; Editing</span></div>
+          <p class="member-bio">Year 12. Combines creative and analytical sides in experimental multimedia art, shifting between whimsical visuals and modern graphic design. Lives in both Indonesia and Australia; collects record players and cassettes, and creates her own music behind-the-scenes.</p>
+        </div>
       </div>
-      <div class="writers-section">
-        <div class="section-bar reveal"><span class="eyebrow">Writing Team — Edition 01</span></div>
-        <div class="writers-grid">
-          <div class="writer-row reveal"><div class="writer-row-name">Alex Victoria Shimokawa Razon</div><p class="writer-row-desc">Grade 11. Focuses on political economy and societal power. Explores abstract concepts through design, illustration, and discovering new music genres.</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">Tusharika Sharma</div><p class="writer-row-desc">Grade 12, India. Identifies patterns across geopolitical contexts. Has worked on research projects involving regression models and risk analysis. Western classical pianist.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">Rani Ebigael Simanjuntak</div><p class="writer-row-desc">Grade 12, North Sumatra. Blends analytical curiosity with creative expression. Explores youth culture, technology, and society. Sings in her church choir; volunteers actively.</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">Isbilya Nathifa Erindra</div><p class="writer-row-desc">Senior high school, South Jakarta. Math and sciences major who taught herself economics independently. Interested in game theory and decision-making systems.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">Aurelia Permatasari</div><p class="writer-row-desc">Grade 12, Tangerang. Economics and astrophysics. Strong in English debate and film analysis. Particular fondness for video essays on YouTube.</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">Cheryl Kirana Sungkono</div><p class="writer-row-desc">Grade 12. Psychology, economics, and community projects. Interested in leadership and sustainable fashion. Plays piano, volunteers, loves photography.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">Rassul Zhunussov</div><p class="writer-row-desc">Grade 12. Interests lean toward economics, corporate finance and decision-making in complex systems. Known for calm, deliberate approach — breaks down problems with quiet precision.</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">David Abubakirov</div><p class="writer-row-desc">Grade 9. Passionate about Economics, Business, and Finance. Enjoys running outdoors, experimenting with small projects. Thoughtful, with a sense of humour.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">Jiyhan Kayfa Zahrah</div><p class="writer-row-desc">Grade 11. From Social Studies Olympiads to a growing obsession with Economics. Volunteers, dances, sings. Days filled with spontaneous ideas and activities.</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">Gelya Dima</div><p class="writer-row-desc">Grade 11. Keen interest in finance and economics; mixes creativity with analytical thinking. Goes to concerts, collects travel souvenirs.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">John Kirkman</div><p class="writer-row-desc">Grade 12, Geneva. Finishing Swiss Maturité. Loves game theory and applying economics to understand the outer world. Completed a 300km cycle ride — which he calls his "ambitious stupidity."</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">Elijah Meyer</div><p class="writer-row-desc">First-year university. Jumps between computer science and philosophy. Passionate about cars — takes his Subaru onto controlled tracks for speed and precision.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">Nathaniel Tirtawijaya</div><p class="writer-row-desc">Year 12. English, Economics, and Social Sciences. Movie-enjoyer. Known for turning everyday instances into introspections — it's just how he maneuvers through life.</p></div>
-          <div class="writer-row reveal d1"><div class="writer-row-name">Adiya Dias</div><p class="writer-row-desc">Grade 11. Keen interest in business, economics, and digital platforms. Works on tech and sustainability projects. Constantly motivated by challenges — from original concepts to hackathons.</p></div>
-          <div class="writer-row reveal"><div class="writer-row-name">Sameera Vyas</div><p class="writer-row-desc">Writer and contributor, Edition 01.</p></div>
+
+      <!-- Writers -->
+      <div class="section-bar reveal" style="margin-top:3rem;"><span class="eyebrow">Writing Team — Edition 01</span></div>
+      <div class="writers-grid">
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Alex Victoria Shimokawa Razon</span></div>
+          <p class="writer-row-desc">Grade 11. Focuses on political economy and societal power, analytical thinking and trend analysis. Explores abstract concepts through design, illustration, and discovering new music genres.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Tusharika Sharma</span></div>
+          <p class="writer-row-desc">Grade 12, India. Identifies patterns across geopolitical contexts. Has worked on research projects involving regression models and risk analysis. Western classical pianist.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Sameera Vyas</span></div>
+          <p class="writer-row-desc">Writer and contributor, Edition 01.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Rani Ebigael Simanjuntak</span></div>
+          <p class="writer-row-desc">Grade 12, North Sumatra. Blends analytical curiosity with creative expression. Explores youth culture, technology, and society. Sings in her church choir and volunteers actively in her community.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Isbilya Nathifa Erindra</span></div>
+          <p class="writer-row-desc">Senior high school, South Jakarta. Math and sciences major who taught herself economics independently by exploring concepts and following real-world trends. Unwinds with a classic romcom and hot cocoa.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Aurelia Permatasari</span></div>
+          <p class="writer-row-desc">Grade 12, Tangerang. Economics and astrophysics. Strong in English debate, film analysis, and connecting observations to the concepts she studies. Particular fondness for video essays on YouTube.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Cheryl Kirana Sungkono</span></div>
+          <p class="writer-row-desc">Grade 12. Divides time between psychology textbooks, economics articles, and community projects. Interested in leadership and sustainable fashion. Plays piano, volunteers, loves photography.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Rassul Zhunussov</span></div>
+          <p class="writer-row-desc">Grade 12. Interests lean toward economics, corporate finance and decision-making in complex systems. Known for calm, deliberate approach — breaks down problems with quiet precision.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">David Abubakirov</span></div>
+          <p class="writer-row-desc">Grade 9. Passionate about Economics, Business, and Finance. Enjoys running outdoors, experimenting with small projects, and coming up with new ideas. Thoughtful, with a sense of humour.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Jiyhan Kayfa Zahrah</span></div>
+          <p class="writer-row-desc">Grade 11. From Social Studies Olympiads to a growing obsession with Economics. Volunteers, dances (traditional and modern), sings. Days filled with spontaneous ideas and activities.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Gelya Dima</span></div>
+          <p class="writer-row-desc">Grade 11. Keen interest in finance and economics, natural curiosity for how things work. Mixes creativity with analytical thinking. Goes to concerts, collects travel souvenirs.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">John Kirkman</span></div>
+          <p class="writer-row-desc">Grade 12, Geneva. Finishing Swiss Maturité. Loves the logic of game theory and applying economics to understand the outer world. Completed a 300km cycle ride — which he calls his "ambitious stupidity."</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Elijah Meyer</span></div>
+          <p class="writer-row-desc">First-year university. Jumps between computer science and philosophy, using abstract ideas to question the real world. Passionate about cars — takes his Subaru onto controlled tracks.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Nathaniel Tirtawijaya</span></div>
+          <p class="writer-row-desc">Year 12. Spans English, Economics, and Social Sciences. Known for analytical streak and structured writing. Movie-enjoyer. Turns everyday instances into introspections — it's just how he maneuvers through life.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Adiya Dias</span></div>
+          <p class="writer-row-desc">Grade 11. Keen interest in business, economics, and digital platforms. Works on tech and sustainability projects, develops apps. Constantly motivated by challenges — from original concepts to hackathons.</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- JOIN -->
   <section class="join" id="join">
     <div class="wrap">
       <h2 class="join-headline reveal">Get<br><em>Involved.</em></h2>
@@ -493,6 +702,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer" id="contact">
     <div class="wrap">
       <div class="footer-grid">
@@ -505,14 +715,24 @@
   </footer>
 
   <script>
-    const nav = document.getElementById('nav'), navCta = document.getElementById('navCta');
+    const nav = document.getElementById('nav');
+    const navCta = document.getElementById('navCta');
     window.addEventListener('scroll', () => { const y = window.scrollY; nav.classList.toggle('lifted', y > 10); navCta.style.display = y > 200 ? 'inline-flex' : 'none'; }, { passive: true });
-    const hamburger = document.getElementById('hamburger'), drawer = document.getElementById('drawer');
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('drawer');
     hamburger.addEventListener('click', () => { const open = drawer.classList.toggle('open'); hamburger.classList.toggle('open', open); hamburger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
     function closeDrawer() { drawer.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
-    const io = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
+    const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-    document.getElementById('nlForm').addEventListener('submit', e => { e.preventDefault(); const btn = document.getElementById('nlBtn'), input = e.target.querySelector('input'); btn.textContent = "You're in ✓"; btn.style.background = 'oklch(40% 0.14 145)'; input.value = ''; setTimeout(() => { btn.textContent = 'Subscribe →'; btn.style.background = ''; }, 3500); });
+    document.getElementById('nlForm').addEventListener('submit', (e) => { e.preventDefault(); const btn = document.getElementById('nlBtn'); const input = e.target.querySelector('input'); btn.textContent = "You're in ✓"; btn.style.background = 'oklch(40% 0.14 145)'; input.value = ''; setTimeout(() => { btn.textContent = 'Subscribe →'; btn.style.background = ''; }, 3500); });
+    document.querySelectorAll('img[src^="images/"]').forEach(img => {
+      img.addEventListener('error', function handler() {
+        this.removeEventListener('error', handler);
+        const url = this.getAttribute('src');
+        if (!url || url.startsWith('data:')) return;
+        fetch(url).then(r => r.text()).then(b64 => { this.src = 'data:image/jpeg;base64,' + b64.trim(); }).catch(() => {});
+      });
+    });
   </script>
 </body>
 </html>
