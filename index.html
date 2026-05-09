@@ -9,953 +9,485 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
   <style>
-    /* ─── TOKENS ──────────────────────────────────────────── */
     :root {
-      --bg:          oklch(96.5% 0.012 75);
-      --bg-warm:     oklch(93%   0.018 75);
-      --bg-dark:     oklch(13%   0.02  75);
-      --ink:         oklch(13%   0.02  75);
-      --ink-mid:     oklch(38%   0.015 75);
-      --ink-faint:   oklch(60%   0.01  75);
-      --rule:        oklch(84%   0.012 75);
-      --red:         oklch(47%   0.19  24);
-      --red-pale:    oklch(95%   0.03  24);
-
+      --bg:        oklch(96.5% 0.012 75);
+      --bg-warm:   oklch(93%   0.018 75);
+      --bg-dark:   oklch(13%   0.02  75);
+      --ink:       oklch(13%   0.02  75);
+      --ink-mid:   oklch(38%   0.015 75);
+      --ink-faint: oklch(60%   0.01  75);
+      --rule:      oklch(84%   0.012 75);
+      --red:       oklch(47%   0.19  24);
+      --red-pale:  oklch(95%   0.03  24);
       --f-display: 'Fraunces', Georgia, serif;
       --f-ui:      'Syne', system-ui, sans-serif;
       --f-body:    'DM Sans', system-ui, sans-serif;
-
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
-
-    /* ─── RESET ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--f-body);
-      font-size: 16px;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     button { cursor: pointer; background: none; border: none; }
+    img { display: block; max-width: 100%; }
 
-    /* ─── UTILITIES ───────────────────────────────────────── */
     .wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
-
-    .eyebrow {
-      font-family: var(--f-ui);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--red);
-    }
-
-    .section-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 2.5rem;
-    }
-    .section-bar-right {
-      font-family: var(--f-ui);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-mid);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: color 0.2s;
-    }
+    .eyebrow { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); }
+    .section-bar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
+    .section-bar-right { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
     .section-bar-right:hover { color: var(--red); }
-
-    .btn {
-      font-family: var(--f-ui);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1.6rem;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-    }
-    .btn-fill   { background: var(--ink); color: var(--bg); }
+    .btn { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.6rem; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+    .btn-fill { background: var(--ink); color: var(--bg); }
     .btn-fill:hover { background: var(--red); }
     .btn-stroke { border: 1.5px solid var(--ink); color: var(--ink); }
     .btn-stroke:hover { border-color: var(--red); color: var(--red); }
-    .btn-ghost  { border: 1px solid oklch(32% 0.01 75); color: oklch(72% 0.01 75); }
+    .btn-ghost { border: 1px solid oklch(32% 0.01 75); color: oklch(72% 0.01 75); }
     .btn-ghost:hover { border-color: var(--red); color: var(--red); }
-
-    /* ─── SCROLL REVEAL ──────────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
-    }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
     .reveal.in { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: 0.1s; }
-    .d2 { transition-delay: 0.2s; }
-    .d3 { transition-delay: 0.3s; }
-    .d4 { transition-delay: 0.4s; }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .ticker-track { animation-play-state: paused; } }
 
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .ticker-track { animation-play-state: paused; }
-    }
-
-    /* ─── NAV ─────────────────────────────────────────────── */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: var(--bg);
-      border-bottom: 1px solid var(--rule);
-      transition: box-shadow 0.3s;
-    }
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 200; background: var(--bg); border-bottom: 1px solid var(--rule); transition: box-shadow 0.3s; }
     .nav.lifted { box-shadow: 0 4px 32px oklch(0% 0 0 / 0.06); }
-    .nav-inner {
-      height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-    .nav-logo {
-      font-family: var(--f-ui);
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      flex-shrink: 0;
-    }
+    .nav-inner { height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { font-family: var(--f-ui); font-size: 1rem; font-weight: 800; letter-spacing: 0.06em; flex-shrink: 0; }
     .nav-logo em { color: var(--red); font-style: normal; }
-
-    .nav-links {
-      display: none;
-      gap: 2rem;
-    }
-    .nav-links a {
-      font-family: var(--f-ui);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-mid);
-      transition: color 0.2s;
-    }
+    .nav-links { display: none; gap: 2rem; }
+    .nav-links a { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); transition: color 0.2s; }
     .nav-links a:hover { color: var(--red); }
-
     .nav-right { display: flex; align-items: center; gap: 1rem; }
-
-    .hamburger {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding: 6px;
-    }
-    .hamburger span {
-      display: block;
-      width: 20px;
-      height: 1.5px;
-      background: var(--ink);
-      transition: transform 0.3s var(--ease), opacity 0.3s;
-    }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; padding: 6px; }
+    .hamburger span { display: block; width: 20px; height: 1.5px; background: var(--ink); transition: transform 0.3s var(--ease), opacity 0.3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* Mobile drawer */
-    .mobile-drawer {
-      display: none;
-      position: fixed;
-      inset: 58px 0 0 0;
-      background: var(--bg);
-      z-index: 199;
-      flex-direction: column;
-      padding: 2rem 1.5rem;
-      overflow-y: auto;
-      gap: 0.25rem;
-    }
+    .mobile-drawer { display: none; position: fixed; inset: 58px 0 0 0; background: var(--bg); z-index: 199; flex-direction: column; padding: 2rem 1.5rem; overflow-y: auto; gap: 0.25rem; }
     .mobile-drawer.open { display: flex; }
-    .mobile-drawer a {
-      font-family: var(--f-display);
-      font-size: clamp(2rem, 7vw, 3rem);
-      font-weight: 700;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--rule);
-      color: var(--ink);
-      transition: color 0.2s;
-    }
+    .mobile-drawer a { font-family: var(--f-display); font-size: clamp(2rem, 7vw, 3rem); font-weight: 700; padding: 0.6rem 0; border-bottom: 1px solid var(--rule); color: var(--ink); transition: color 0.2s; }
     .mobile-drawer a:hover { color: var(--red); }
-    .mobile-drawer .drawer-contact {
-      margin-top: 2rem;
-      font-family: var(--f-ui);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-    .mobile-drawer .drawer-contact a {
-      font-family: var(--f-ui);
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: none;
-      padding: 0;
-      color: var(--red);
-      letter-spacing: 0;
-      text-transform: none;
-    }
+    .mobile-drawer .drawer-contact { margin-top: 2rem; font-family: var(--f-ui); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+    .mobile-drawer .drawer-contact a { font-family: var(--f-ui); font-size: 0.85rem; font-weight: 600; border: none; padding: 0; color: var(--red); letter-spacing: 0; text-transform: none; }
 
-    /* ─── TICKER ──────────────────────────────────────────── */
-    .ticker {
-      background: var(--red);
-      overflow: hidden;
-      padding: 0.55rem 0;
-      white-space: nowrap;
-      user-select: none;
-    }
-    .ticker-track {
-      display: inline-flex;
-      animation: scroll-ticker 32s linear infinite;
-    }
-    .ticker-item {
-      font-family: var(--f-ui);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: oklch(96% 0.01 75);
-      padding: 0 2.5rem;
-    }
+    /* TICKER */
+    .ticker { background: var(--red); overflow: hidden; padding: 0.55rem 0; white-space: nowrap; user-select: none; }
+    .ticker-track { display: inline-flex; animation: scroll-ticker 36s linear infinite; }
+    .ticker-item { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: oklch(96% 0.01 75); padding: 0 2.5rem; }
     .ticker-sep { opacity: 0.35; }
-    @keyframes scroll-ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+    @keyframes scroll-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* ─── HERO ────────────────────────────────────────────── */
-    .hero {
-      padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 5rem);
-      overflow: hidden;
-    }
-    .hero-pre {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-    }
-    .hero-pre-line {
-      width: 40px;
-      height: 1px;
-      background: var(--red);
-    }
-    .hero-headline {
-      font-family: var(--f-display);
-      font-size: clamp(4rem, 11vw, 11rem);
-      font-weight: 900;
-      line-height: 0.88;
-      letter-spacing: -0.035em;
-      margin-bottom: clamp(2rem, 4vw, 3.5rem);
-    }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--red);
-      font-weight: 300;
-    }
-    .hero-lower {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--rule);
-    }
-    .hero-tagline {
-      font-family: var(--f-display);
-      font-size: clamp(1rem, 2.2vw, 1.45rem);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--ink-mid);
-      max-width: 52ch;
-      line-height: 1.55;
-    }
+    /* HERO */
+    .hero { padding: clamp(3rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 5rem); overflow: hidden; }
+    .hero-pre { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .hero-pre-line { width: 40px; height: 1px; background: var(--red); }
+    .hero-headline { font-family: var(--f-display); font-size: clamp(4rem, 11vw, 11rem); font-weight: 900; line-height: 0.88; letter-spacing: -0.035em; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+    .hero-headline em { font-style: italic; color: var(--red); font-weight: 300; }
+    .hero-lower { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+    .hero-tagline { font-family: var(--f-display); font-size: clamp(1rem, 2.2vw, 1.45rem); font-style: italic; font-weight: 300; color: var(--ink-mid); max-width: 52ch; line-height: 1.55; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-    .hero-numbers {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      margin-top: 0.5rem;
-    }
+    .hero-numbers { display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
     .hero-num-item { display: flex; flex-direction: column; }
-    .hero-num-val {
-      font-family: var(--f-display);
-      font-size: 2.4rem;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--red);
-    }
-    .hero-num-label {
-      font-family: var(--f-ui);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-top: 0.2rem;
-    }
+    .hero-num-val { font-family: var(--f-display); font-size: 2.4rem; font-weight: 800; line-height: 1; color: var(--red); }
+    .hero-num-label { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-top: 0.2rem; }
 
-    /* ─── ARTICLES ────────────────────────────────────────── */
-    .articles { padding: clamp(3rem, 6vw, 5rem) 0; }
-
-    .mosaic {
-      display: grid;
-      grid-template-columns: 1fr;
-      border: 1px solid var(--rule);
-      gap: 0;
-    }
-
-    .mosaic-cell {
-      padding: clamp(1.25rem, 2.5vw, 2rem);
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.2s;
-    }
-    .mosaic-cell:last-child { border-bottom: none; }
-    .mosaic-cell:hover { background: var(--red-pale); }
-
-    .mosaic-cell.large .art-title {
-      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
-    }
-
-    .art-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.9rem;
-    }
-    .art-badge {
-      font-family: var(--f-ui);
-      font-size: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      background: var(--ink);
-      color: var(--bg);
-    }
-    .art-badge.accent { background: var(--red); }
-    .art-topic {
-      font-family: var(--f-ui);
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-    .art-title {
-      font-family: var(--f-display);
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.6rem;
-      transition: color 0.2s;
-    }
-    .mosaic-cell:hover .art-title { color: var(--red); }
-    .art-excerpt {
-      font-size: 0.9rem;
-      color: var(--ink-mid);
-      max-width: 62ch;
-      margin-bottom: 0.9rem;
-      line-height: 1.7;
-    }
-    .art-byline {
-      font-family: var(--f-ui);
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--ink-faint);
-      letter-spacing: 0.04em;
-    }
-
-    /* ─── ABOUT ───────────────────────────────────────────── */
-    .about {
-      padding: clamp(3.5rem, 7vw, 7rem) 0;
+    /* ACHIEVEMENT BADGE */
+    .achievement-bar {
       background: var(--bg-warm);
       border-top: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
-    }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(2.5rem, 5vw, 5rem);
-    }
-    .about-pull {
-      font-family: var(--f-display);
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.4;
-      border-top: 3px solid var(--red);
-      padding-top: 1.5rem;
-      margin-bottom: 1.75rem;
-      color: var(--ink);
-    }
-    .about-body {
-      font-size: 0.975rem;
-      color: var(--ink-mid);
-      max-width: 58ch;
-      line-height: 1.85;
-    }
-    .about-body p + p { margin-top: 1rem; }
-
-    .about-pillars { display: flex; flex-direction: column; }
-    .pillar {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-    .pillar:first-child { border-top: 1px solid var(--rule); }
-    .pillar-num {
-      font-family: var(--f-display);
-      font-size: 3.5rem;
-      font-weight: 900;
-      color: var(--red);
-      opacity: 0.2;
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-    .pillar-title {
-      font-family: var(--f-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .pillar-desc {
-      font-size: 0.875rem;
-      color: var(--ink-mid);
-      max-width: 38ch;
-      line-height: 1.65;
-    }
-
-    /* ─── ISSUES ──────────────────────────────────────────── */
-    .issues { padding: clamp(3.5rem, 7vw, 7rem) 0; }
-    .issues-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-    .issue-card {
-      border: 1px solid var(--rule);
-      padding: clamp(1.5rem, 3vw, 2.5rem);
-    }
-    .issue-top {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.5rem;
-      margin-bottom: 1.75rem;
-      flex-wrap: wrap;
-    }
-    .issue-big-num {
-      font-family: var(--f-display);
-      font-size: 7rem;
-      font-weight: 900;
-      line-height: 0.8;
-      color: var(--red);
-      opacity: 0.12;
-      flex-shrink: 0;
-      user-select: none;
-    }
-    .issue-meta {}
-    .issue-title {
-      font-family: var(--f-display);
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }
-    .issue-sub {
-      font-size: 0.9rem;
-      color: var(--ink-mid);
-      max-width: 48ch;
-    }
-    .writers-label {
-      font-family: var(--f-ui);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 0.85rem;
-    }
-    .writers {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .writer {
-      font-family: var(--f-ui);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      background: var(--bg);
-      border: 1px solid var(--rule);
-      padding: 0.3rem 0.7rem;
-      color: var(--ink-mid);
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .issue-card:hover .writer { border-color: oklch(80% 0.02 24); }
-
-    /* ─── TEAM ────────────────────────────────────────────── */
-    .team { padding: clamp(3.5rem, 7vw, 7rem) 0; border-top: 1px solid var(--rule); }
-    .team-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-    .member {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
       padding: 1rem 0;
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.15s;
     }
-    .member:first-child { border-top: 1px solid var(--rule); }
-    .member-name {
-      font-family: var(--f-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-    }
-    .member-role {
-      font-family: var(--f-ui);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--red);
-      white-space: nowrap;
-    }
-
-    /* ─── JOIN ────────────────────────────────────────────── */
-    .join {
-      background: var(--bg-dark);
-      color: oklch(92% 0.012 75);
-      padding: clamp(4rem, 8vw, 8rem) 0;
-    }
-    .join-headline {
-      font-family: var(--f-display);
-      font-size: clamp(3rem, 7.5vw, 7rem);
-      font-weight: 900;
-      line-height: 0.9;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.5rem;
-    }
-    .join-headline em { color: var(--red); font-style: italic; font-weight: 300; }
-    .join-sub {
-      font-size: 1rem;
-      color: oklch(62% 0.01 75);
-      max-width: 48ch;
-      line-height: 1.75;
-      margin-bottom: 3rem;
-    }
-    .join-ways {
-      display: grid;
-      grid-template-columns: 1fr;
-      border: 1px solid oklch(22% 0.01 75);
-      gap: 0;
-    }
-    .way {
-      padding: clamp(1.5rem, 3vw, 2.25rem);
-      border-bottom: 1px solid oklch(22% 0.01 75);
-      transition: background 0.2s;
-    }
-    .way:last-child { border-bottom: none; }
-    .way:hover { background: oklch(17% 0.015 75); }
-    .way-num {
-      font-family: var(--f-display);
-      font-size: 2.8rem;
-      font-weight: 900;
-      line-height: 1;
-      color: var(--red);
-      margin-bottom: 0.4rem;
-    }
-    .way-title {
-      font-family: var(--f-display);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: oklch(92% 0.012 75);
-      margin-bottom: 0.5rem;
-    }
-    .way-desc {
-      font-size: 0.875rem;
-      color: oklch(56% 0.01 75);
-      max-width: 36ch;
-      margin-bottom: 1.25rem;
-      line-height: 1.65;
-    }
-
-    /* Newsletter */
-    .newsletter-block {
-      margin-top: 3.5rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid oklch(22% 0.01 75);
-    }
-    .newsletter-label {
-      font-family: var(--f-ui);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: oklch(45% 0.01 75);
-      margin-bottom: 1.25rem;
-    }
-    .newsletter-form {
+    .achievement-inner {
       display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      max-width: 500px;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
-    .newsletter-input {
-      background: oklch(18% 0.015 75);
-      border: 1px solid oklch(28% 0.01 75);
-      color: oklch(92% 0.012 75);
-      padding: 0.9rem 1rem;
-      font-family: var(--f-ui);
-      font-size: 0.9rem;
-      font-weight: 400;
-      outline: none;
-      transition: border-color 0.2s;
-      flex: 1;
-      min-width: 0;
+    .achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
-    .newsletter-input:focus { border-color: var(--red); }
-    .newsletter-input::placeholder { color: oklch(40% 0.01 75); }
-    .newsletter-submit {
-      font-family: var(--f-ui);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .achievement-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      color: white;
+    }
+    .achievement-text { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 600; color: var(--ink-mid); max-width: 28ch; line-height: 1.4; }
+    .achievement-text strong { color: var(--ink); }
+    .achievement-sep { width: 1px; height: 28px; background: var(--rule); }
+
+    /* ISSUE 01 SPOTLIGHT */
+    .issue-spotlight { padding: clamp(3rem, 6vw, 5.5rem) 0; border-bottom: 1px solid var(--rule); }
+    .spotlight-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+    .spotlight-cover {
+      position: relative;
+    }
+    .spotlight-cover img {
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 12px 16px 48px oklch(0% 0 0 / 0.14);
+    }
+    .spotlight-cover-badge {
+      position: absolute;
+      top: -0.75rem;
+      right: -0.75rem;
       background: var(--red);
       color: oklch(97% 0.01 75);
-      border: none;
-      padding: 0.9rem 1.75rem;
-      transition: opacity 0.2s;
-      align-self: flex-start;
-      white-space: nowrap;
-    }
-    .newsletter-submit:hover { opacity: 0.82; }
-
-    /* ─── FOOTER ──────────────────────────────────────────── */
-    .footer {
-      border-top: 1px solid var(--rule);
-      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-      margin-bottom: 3rem;
-    }
-    .footer-logo {
       font-family: var(--f-ui);
-      font-size: 1.4rem;
+      font-size: 0.6rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.75rem;
-    }
-    .footer-logo em { color: var(--red); font-style: normal; }
-    .footer-desc {
-      font-size: 0.875rem;
-      color: var(--ink-mid);
-      max-width: 36ch;
-      line-height: 1.65;
-    }
-    .footer-col-title {
-      font-family: var(--f-ui);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 1rem;
-    }
-    .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
-    .footer-links a {
-      font-size: 0.9rem;
-      color: var(--ink-mid);
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--red); }
-    .footer-base {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--rule);
-    }
-    .footer-copy {
-      font-family: var(--f-ui);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-    }
-    .footer-socials { display: flex; gap: 1.5rem; }
-    .footer-socials a {
-      font-family: var(--f-ui);
-      font-size: 0.68rem;
-      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink-mid);
-      transition: color 0.2s;
+      padding: 0.35rem 0.7rem;
     }
+    .spotlight-content {}
+    .spotlight-issue-label { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .spotlight-num { font-family: var(--f-display); font-size: 1rem; font-weight: 700; color: var(--red); }
+    .spotlight-title { font-family: var(--f-display); font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .spotlight-sub { font-size: 0.975rem; color: var(--ink-mid); max-width: 52ch; line-height: 1.75; margin-bottom: 1.75rem; }
+    .spotlight-sections { display: flex; flex-direction: column; gap: 0; }
+    .spotlight-sec-item { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
+    .spotlight-sec-item:first-child { border-top: 1px solid var(--rule); }
+    .spotlight-sec-tag { font-family: var(--f-ui); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 0.15rem 0.45rem; flex-shrink: 0; }
+    .spotlight-sec-tag.accent { background: var(--red); }
+    .spotlight-sec-title { font-family: var(--f-display); font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+
+    /* ARTICLES MOSAIC */
+    .articles { padding: clamp(3rem, 6vw, 5rem) 0; }
+    .mosaic { display: grid; grid-template-columns: 1fr; border: 1px solid var(--rule); gap: 0; }
+    .mosaic-cell { padding: clamp(1.25rem, 2.5vw, 2rem); border-bottom: 1px solid var(--rule); transition: background 0.2s; }
+    .mosaic-cell:last-child { border-bottom: none; }
+    .mosaic-cell:hover { background: var(--red-pale); }
+    .art-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem; }
+    .art-badge { font-family: var(--f-ui); font-size: 0.6rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.2rem 0.55rem; background: var(--ink); color: var(--bg); }
+    .art-badge.accent { background: var(--red); }
+    .art-topic { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+    .art-title { font-family: var(--f-display); font-size: clamp(1.1rem, 2.5vw, 1.6rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 0.6rem; transition: color 0.2s; }
+    .mosaic-cell:hover .art-title { color: var(--red); }
+    .art-excerpt { font-size: 0.9rem; color: var(--ink-mid); max-width: 62ch; margin-bottom: 0.9rem; line-height: 1.7; }
+    .art-byline { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 600; color: var(--ink-faint); letter-spacing: 0.04em; }
+
+    /* ABOUT */
+    .about { padding: clamp(3.5rem, 7vw, 7rem) 0; background: var(--bg-warm); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 5vw, 5rem); }
+    .about-pull { font-family: var(--f-display); font-size: clamp(1.5rem, 3vw, 2.2rem); font-style: italic; font-weight: 300; line-height: 1.4; border-top: 3px solid var(--red); padding-top: 1.5rem; margin-bottom: 1.75rem; color: var(--ink); }
+    .about-body { font-size: 0.975rem; color: var(--ink-mid); max-width: 58ch; line-height: 1.85; }
+    .about-body p + p { margin-top: 1rem; }
+    .about-pillars { display: flex; flex-direction: column; }
+    .pillar { padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
+    .pillar:first-child { border-top: 1px solid var(--rule); }
+    .pillar-num { font-family: var(--f-display); font-size: 3.5rem; font-weight: 900; color: var(--red); opacity: 0.2; line-height: 1; margin-bottom: 0.25rem; }
+    .pillar-title { font-family: var(--f-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .pillar-desc { font-size: 0.875rem; color: var(--ink-mid); max-width: 38ch; line-height: 1.65; }
+
+    /* FOUNDER'S NOTE */
+    .founders-note { padding: clamp(3.5rem, 7vw, 7rem) 0; border-bottom: 1px solid var(--rule); }
+    .founders-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 5vw, 4rem); align-items: start; }
+    .founders-letter-img {
+      position: relative;
+      max-width: 480px;
+    }
+    .founders-letter-img img { width: 100%; box-shadow: 8px 12px 40px oklch(0% 0 0 / 0.1); }
+    .founders-content {}
+    .founders-quote {
+      font-family: var(--f-display);
+      font-size: clamp(1.25rem, 2.8vw, 1.9rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--ink);
+      border-left: 3px solid var(--red);
+      padding-left: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .founders-text { font-size: 0.95rem; color: var(--ink-mid); line-height: 1.85; max-width: 58ch; }
+    .founders-text p + p { margin-top: 1rem; }
+    .founders-sig {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .founders-sig-name { font-family: var(--f-display); font-size: 1.2rem; font-weight: 700; font-style: italic; color: var(--ink); }
+    .founders-sig-role { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); }
+
+    /* Q&A FEATURE */
+    .qa-feature { background: var(--bg-dark); color: oklch(92% 0.012 75); padding: clamp(3rem, 6vw, 5.5rem) 0; }
+    .qa-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+    .qa-photo-wrap { max-width: 320px; }
+    .qa-photo { width: 100%; }
+    .qa-label { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+    .qa-name { font-family: var(--f-display); font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: oklch(92% 0.012 75); margin-bottom: 0.5rem; }
+    .qa-title { font-family: var(--f-ui); font-size: 0.8rem; font-weight: 600; color: oklch(55% 0.01 75); letter-spacing: 0.04em; margin-bottom: 1.5rem; line-height: 1.5; max-width: 42ch; }
+    .qa-bio { font-size: 0.9rem; color: oklch(62% 0.01 75); line-height: 1.8; max-width: 52ch; }
+    .qa-note { margin-top: 1.5rem; font-family: var(--f-display); font-size: 1rem; font-style: italic; font-weight: 300; color: oklch(72% 0.01 75); border-top: 1px solid oklch(25% 0.01 75); padding-top: 1.25rem; max-width: 48ch; line-height: 1.55; }
+
+    /* ISSUES */
+    .issues { padding: clamp(3.5rem, 7vw, 7rem) 0; }
+    .issues-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    .issue-card { border: 1px solid var(--rule); padding: clamp(1.5rem, 3vw, 2.5rem); }
+    .issue-top { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .issue-big-num { font-family: var(--f-display); font-size: 7rem; font-weight: 900; line-height: 0.8; color: var(--red); opacity: 0.12; flex-shrink: 0; user-select: none; }
+    .issue-title { font-family: var(--f-display); font-size: 2rem; font-weight: 700; line-height: 1.1; margin-bottom: 0.5rem; }
+    .issue-theme { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
+    .issue-sub { font-size: 0.9rem; color: var(--ink-mid); max-width: 48ch; }
+    .issue-card-coming { background: var(--bg-warm); display: flex; align-items: center; justify-content: center; min-height: 180px; flex-direction: column; gap: 0.75rem; }
+    .issue-card-coming-label { font-family: var(--f-display); font-size: 1.5rem; font-weight: 700; color: var(--ink-faint); }
+    .issue-card-coming-sub { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); }
+    .writers-label { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.85rem; }
+    .writers { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .writer { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; background: var(--bg); border: 1px solid var(--rule); padding: 0.3rem 0.7rem; color: var(--ink-mid); transition: border-color 0.2s, color 0.2s; }
+    .issue-card:hover .writer { border-color: oklch(80% 0.02 24); }
+
+    /* TEAM */
+    .team { padding: clamp(3.5rem, 7vw, 7rem) 0; border-top: 1px solid var(--rule); }
+    .team-list { display: grid; grid-template-columns: 1fr; gap: 0; margin-bottom: 2.5rem; }
+    .member { padding: 1.25rem 0; border-bottom: 1px solid var(--rule); }
+    .member:first-child { border-top: 1px solid var(--rule); }
+    .member-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; }
+    .member-name { font-family: var(--f-display); font-size: 1.15rem; font-weight: 600; }
+    .member-role { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); white-space: nowrap; }
+    .member-bio { font-size: 0.85rem; color: var(--ink-mid); max-width: 68ch; line-height: 1.65; }
+
+    /* WRITERS GRID */
+    .writers-section { padding: clamp(3rem, 5vw, 5rem) 0; border-top: 1px solid var(--rule); }
+    .writers-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+    .writer-row { padding: 1rem 0; border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 0.3rem; }
+    .writer-row:first-child { border-top: 1px solid var(--rule); }
+    .writer-row-top { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+    .writer-row-name { font-family: var(--f-display); font-size: 1rem; font-weight: 600; color: var(--ink); }
+    .writer-row-desc { font-size: 0.82rem; color: var(--ink-mid); line-height: 1.6; max-width: 72ch; }
+
+    /* JOIN */
+    .join { background: var(--bg-dark); color: oklch(92% 0.012 75); padding: clamp(4rem, 8vw, 8rem) 0; }
+    .join-headline { font-family: var(--f-display); font-size: clamp(3rem, 7.5vw, 7rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+    .join-headline em { color: var(--red); font-style: italic; font-weight: 300; }
+    .join-sub { font-size: 1rem; color: oklch(62% 0.01 75); max-width: 48ch; line-height: 1.75; margin-bottom: 3rem; }
+    .join-ways { display: grid; grid-template-columns: 1fr; border: 1px solid oklch(22% 0.01 75); gap: 0; }
+    .way { padding: clamp(1.5rem, 3vw, 2.25rem); border-bottom: 1px solid oklch(22% 0.01 75); transition: background 0.2s; }
+    .way:last-child { border-bottom: none; }
+    .way:hover { background: oklch(17% 0.015 75); }
+    .way-num { font-family: var(--f-display); font-size: 2.8rem; font-weight: 900; line-height: 1; color: var(--red); margin-bottom: 0.4rem; }
+    .way-title { font-family: var(--f-display); font-size: 1.4rem; font-weight: 700; color: oklch(92% 0.012 75); margin-bottom: 0.5rem; }
+    .way-desc { font-size: 0.875rem; color: oklch(56% 0.01 75); max-width: 36ch; margin-bottom: 1.25rem; line-height: 1.65; }
+    .newsletter-block { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid oklch(22% 0.01 75); }
+    .newsletter-label { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: oklch(45% 0.01 75); margin-bottom: 1.25rem; }
+    .newsletter-form { display: flex; flex-direction: column; gap: 0.6rem; max-width: 500px; }
+    .newsletter-input { background: oklch(18% 0.015 75); border: 1px solid oklch(28% 0.01 75); color: oklch(92% 0.012 75); padding: 0.9rem 1rem; font-family: var(--f-ui); font-size: 0.9rem; outline: none; transition: border-color 0.2s; flex: 1; min-width: 0; }
+    .newsletter-input:focus { border-color: var(--red); }
+    .newsletter-input::placeholder { color: oklch(40% 0.01 75); }
+    .newsletter-submit { font-family: var(--f-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--red); color: oklch(97% 0.01 75); border: none; padding: 0.9rem 1.75rem; transition: opacity 0.2s; align-self: flex-start; white-space: nowrap; }
+    .newsletter-submit:hover { opacity: 0.82; }
+
+    /* FOOTER */
+    .footer { border-top: 1px solid var(--rule); padding: clamp(3rem, 6vw, 5rem) 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+    .footer-logo { font-family: var(--f-ui); font-size: 1.4rem; font-weight: 800; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+    .footer-logo em { color: var(--red); font-style: normal; }
+    .footer-desc { font-size: 0.875rem; color: var(--ink-mid); max-width: 36ch; line-height: 1.65; }
+    .footer-col-title { font-family: var(--f-ui); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-links a { font-size: 0.9rem; color: var(--ink-mid); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--red); }
+    .footer-base { display: flex; flex-direction: column; gap: 0.75rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+    .footer-copy { font-family: var(--f-ui); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--ink-faint); }
+    .footer-socials { display: flex; gap: 1.5rem; }
+    .footer-socials a { font-family: var(--f-ui); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); transition: color 0.2s; }
     .footer-socials a:hover { color: var(--red); }
 
-    /* ─── BREAKPOINTS ─────────────────────────────────────── */
-    @media (min-width: 600px) {
-      .newsletter-form { flex-direction: row; }
-    }
-
+    /* BREAKPOINTS */
+    @media (min-width: 600px) { .newsletter-form { flex-direction: row; } }
     @media (min-width: 768px) {
-      .nav-links  { display: flex; }
-      .hamburger  { display: none; }
-
+      .nav-links { display: flex; } .hamburger { display: none; }
       .hero-lower { grid-template-columns: 1fr auto; align-items: flex-end; }
-
-      .mosaic     { grid-template-columns: repeat(2, 1fr); }
+      .achievement-inner { flex-wrap: nowrap; }
+      .spotlight-grid { grid-template-columns: auto 1fr; }
+      .mosaic { grid-template-columns: repeat(2, 1fr); }
       .mosaic-cell { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
       .mosaic-cell.large { grid-column: 1 / -1; border-right: none; }
-
       .about-grid { grid-template-columns: 1fr 1fr; }
+      .founders-grid { grid-template-columns: auto 1fr; }
+      .qa-grid { grid-template-columns: auto 1fr; }
       .issues-grid { grid-template-columns: 1fr 1fr; }
-      .team-list  { grid-template-columns: 1fr 1fr; column-gap: 4rem; }
-      .join-ways  { grid-template-columns: repeat(3, 1fr); }
+      .team-list { grid-template-columns: 1fr 1fr; column-gap: 4rem; }
+      .writers-grid { grid-template-columns: 1fr 1fr; column-gap: 4rem; }
+      .join-ways { grid-template-columns: repeat(3, 1fr); }
       .join-ways .way { border-right: 1px solid oklch(22% 0.01 75); border-bottom: none; }
       .join-ways .way:last-child { border-right: none; }
-
       .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
       .footer-base { flex-direction: row; justify-content: space-between; align-items: center; }
     }
-
     @media (min-width: 1024px) {
-      .mosaic     { grid-template-columns: repeat(3, 1fr); }
-      .mosaic-cell.large {
-        grid-column: 1 / 3;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-      }
-      .mosaic-cell.large .art-sidebar {
-        padding-left: clamp(1.25rem, 2.5vw, 2rem);
-        border-left: 1px solid var(--rule);
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-      }
-      .sidebar-item {
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--rule);
-      }
-      .sidebar-item:first-child { padding-top: 0; }
-      .sidebar-item:last-child  { border-bottom: none; }
+      .mosaic { grid-template-columns: repeat(3, 1fr); }
+      .mosaic-cell.large { grid-column: 1 / 3; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+      .mosaic-cell.large .art-sidebar { padding-left: clamp(1.25rem, 2.5vw, 2rem); border-left: 1px solid var(--rule); display: flex; flex-direction: column; gap: 0; }
+      .sidebar-item { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+      .sidebar-item:first-child { padding-top: 0; } .sidebar-item:last-child { border-bottom: none; }
       .mosaic-cell.large .art-primary { padding-right: clamp(1.25rem, 2.5vw, 2rem); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══ NAV ═══════════════════════════════════════════════ -->
+  <!-- NAV -->
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
       <a href="#" class="nav-logo">ECONIFY<em>.</em>ZINE</a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#issues">Issues</a></li>
-          <li><a href="#team">Team</a></li>
-          <li><a href="#join">Join</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+      <nav><ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#edition-01">Edition 01</a></li>
+        <li><a href="#founders-note">Founders</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#join">Join</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul></nav>
       <div class="nav-right">
         <a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener" class="btn btn-fill" style="display:none;" id="navCta">Contribute</a>
-        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
 
   <nav class="mobile-drawer" id="drawer" aria-label="Mobile navigation">
-    <a href="#about"  onclick="closeDrawer()">About</a>
-    <a href="#issues" onclick="closeDrawer()">Issues</a>
-    <a href="#team"   onclick="closeDrawer()">Team</a>
-    <a href="#join"   onclick="closeDrawer()">Join Us</a>
+    <a href="#about" onclick="closeDrawer()">About</a>
+    <a href="#edition-01" onclick="closeDrawer()">Edition 01</a>
+    <a href="#founders-note" onclick="closeDrawer()">Founders</a>
+    <a href="#team" onclick="closeDrawer()">Team</a>
+    <a href="#join" onclick="closeDrawer()">Join Us</a>
     <a href="#contact" onclick="closeDrawer()">Contact</a>
-    <div class="drawer-contact">
-      <div style="margin-bottom: 0.4rem;">Get in touch</div>
-      <a href="mailto:econify.zine@gmail.com">econify.zine@gmail.com</a>
-    </div>
+    <div class="drawer-contact"><div style="margin-bottom:0.4rem">Get in touch</div><a href="mailto:econify.zine@gmail.com">econify.zine@gmail.com</a></div>
   </nav>
 
-  <!-- ═══ TICKER ════════════════════════════════════════════ -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item">Economics, Unfiltered</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Issue 01 Out Now</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Issue 02 In Progress</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Student-Led Analysis</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">No Jargon, No Fear</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">25+ Writers &amp; Growing</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Economics, Unfiltered</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Issue 01 Out Now</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Issue 02 In Progress</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">Student-Led Analysis</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">No Jargon, No Fear</span>
-      <span class="ticker-item ticker-sep">◆</span>
-      <span class="ticker-item">25+ Writers &amp; Growing</span>
-      <span class="ticker-item ticker-sep">◆</span>
-    </div>
-  </div>
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true"><div class="ticker-track">
+    <span class="ticker-item">Economics, Unfiltered</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">The Price of Power — Edition 01</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Recognised by the UK Foreign Commonwealth Office</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Student-Led Analysis</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">No Jargon, No Fear</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Featuring a Q&amp;A with Prof. Bhimani — LSE</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Economics, Unfiltered</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">The Price of Power — Edition 01</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Recognised by the UK Foreign Commonwealth Office</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Student-Led Analysis</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">No Jargon, No Fear</span><span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Featuring a Q&amp;A with Prof. Bhimani — LSE</span><span class="ticker-item ticker-sep">◆</span>
+  </div></div>
 
-  <!-- ═══ HERO ══════════════════════════════════════════════ -->
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap">
-      <div class="hero-pre reveal">
-        <div class="hero-pre-line"></div>
-        <span class="eyebrow">Student Economics Publication</span>
-      </div>
-      <h1 class="hero-headline reveal">
-        Economics,<br><em>Unfiltered.</em>
-      </h1>
+      <div class="hero-pre reveal"><div class="hero-pre-line"></div><span class="eyebrow">Student Economics Publication</span></div>
+      <h1 class="hero-headline reveal">Economics,<br><em>Unfiltered.</em></h1>
       <div class="hero-lower">
-        <p class="hero-tagline reveal d1">
-          Student-written analysis on the systems, policies, and powers that shape our world — no jargon required, no question off limits.
-        </p>
+        <p class="hero-tagline reveal d1">Student-written analysis on the systems, policies, and powers that shape our world — no jargon required, no question off limits.</p>
         <div class="hero-actions reveal d2">
-          <a href="#issues" class="btn btn-fill">Read the Zine →</a>
+          <a href="#edition-01" class="btn btn-fill">Read the Zine →</a>
           <a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener" class="btn btn-stroke">Contribute</a>
         </div>
       </div>
-      <div class="hero-numbers reveal d3" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--rule);">
-        <div class="hero-num-item">
-          <span class="hero-num-val">2</span>
-          <span class="hero-num-label">Editions</span>
+      <div class="hero-numbers reveal d3" style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--rule);">
+        <div class="hero-num-item"><span class="hero-num-val">2</span><span class="hero-num-label">Editions</span></div>
+        <div class="hero-num-item"><span class="hero-num-val">25+</span><span class="hero-num-label">Writers</span></div>
+        <div class="hero-num-item"><span class="hero-num-val">1</span><span class="hero-num-label">Mission</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENT BAR -->
+  <div class="achievement-bar reveal">
+    <div class="wrap">
+      <div class="achievement-inner">
+        <div class="achievement-item">
+          <div class="achievement-icon">★</div>
+          <p class="achievement-text"><strong>Essay recognised</strong> by the UK Foreign, Commonwealth &amp; Development Office</p>
         </div>
-        <div class="hero-num-item">
-          <span class="hero-num-val">25+</span>
-          <span class="hero-num-label">Writers</span>
+        <div class="achievement-sep"></div>
+        <div class="achievement-item">
+          <div class="achievement-icon">◈</div>
+          <p class="achievement-text"><strong>Featuring a Q&amp;A</strong> with Prof. Alnoor Bhimani, LSE Professor &amp; CPA</p>
         </div>
-        <div class="hero-num-item">
-          <span class="hero-num-val">1</span>
-          <span class="hero-num-label">Mission</span>
+        <div class="achievement-sep"></div>
+        <div class="achievement-item">
+          <div class="achievement-icon">✦</div>
+          <p class="achievement-text"><strong>Works written</strong> by students globally — Geneva to Jakarta to New Delhi</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDITION 01 SPOTLIGHT -->
+  <section class="issue-spotlight" id="edition-01">
+    <div class="wrap">
+      <div class="section-bar reveal"><span class="eyebrow">Now Available</span></div>
+      <div class="spotlight-grid">
+        <div class="spotlight-cover reveal">
+          <img src="images/cover-ed1.jpg" alt="Econify Zine Edition 01 — The Price of Power" loading="lazy">
+          <div class="spotlight-cover-badge">Edition 01 · 2026</div>
+        </div>
+        <div class="spotlight-content reveal d1">
+          <div class="spotlight-issue-label">
+            <span class="eyebrow">First Edition</span>
+            <span style="font-family:var(--f-ui);font-size:0.68rem;color:var(--ink-faint)">2026</span>
+          </div>
+          <h2 class="spotlight-title">The Price<br>of Power</h2>
+          <p class="spotlight-sub">Power is never free. Nations pay for it with the strength of their institutions. Markets pay for it with uncertainty. Individuals pay for it with trust, the most fragile currency of all. This edition traces the hidden lines between influence and inequality, between ambition and accountability.</p>
+          <div class="spotlight-sections">
+            <div class="spotlight-sec-item"><span class="spotlight-sec-tag accent">Political Economy</span><span class="spotlight-sec-title">The Price of Protection: Power, Trade, and the UK's Strategic Dilemma</span></div>
+            <div class="spotlight-sec-item"><span class="spotlight-sec-tag">Int'l Relations</span><span class="spotlight-sec-title">Debt Diplomacy: The Economic Price of Power in China's BRI</span></div>
+            <div class="spotlight-sec-item"><span class="spotlight-sec-tag">Behavioural</span><span class="spotlight-sec-title">The Proximity Principle: Why Trust Travels Faster Between People Than Institutions</span></div>
+            <div class="spotlight-sec-item"><span class="spotlight-sec-tag">Global Trade</span><span class="spotlight-sec-title">The Untamed Law of Globalization: The Rich Get Richer, the Poor Get Poorer</span></div>
+            <div class="spotlight-sec-item"><span class="spotlight-sec-tag">Development</span><span class="spotlight-sec-title">From Streets to Systems: Should Waste Pickers Work with Recycling Companies?</span></div>
+            <div class="spotlight-sec-item"><span class="spotlight-sec-tag">Technology</span><span class="spotlight-sec-title">The Hidden Cost Behind AI's Power in Finance</span></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ ARTICLES ══════════════════════════════════════════ -->
-  <section class="articles" id="articles">
+  <!-- ARTICLES MOSAIC -->
+  <section class="articles">
     <div class="wrap">
-      <div class="section-bar reveal">
-        <span class="eyebrow">From the Zine</span>
-        <a href="#issues" class="section-bar-right">All issues →</a>
-      </div>
+      <div class="section-bar reveal"><span class="eyebrow">From Edition 01</span><a href="#edition-01" class="section-bar-right">View all articles →</a></div>
       <div class="mosaic">
-        <!-- Featured (large) -->
         <article class="mosaic-cell large reveal">
           <div class="art-primary">
-            <div class="art-meta">
-              <span class="art-badge accent">Issue 01</span>
-              <span class="art-topic">Featured</span>
-            </div>
-            <h2 class="art-title" style="font-size: clamp(1.7rem, 3.5vw, 2.8rem);">
-              How Markets Silence the Most Inconvenient Truths
-            </h2>
-            <p class="art-excerpt">
-              When economic theory meets political reality, something always gets left out of the model. Our writers interrogate what mainstream economics refuses to name — and why the silence is never accidental.
-            </p>
-            <span class="art-byline">By the Econify Zine Team</span>
+            <div class="art-meta"><span class="art-badge accent">Political Economy</span></div>
+            <h2 class="art-title" style="font-size:clamp(1.7rem,3.5vw,2.8rem)">The Price of Protection: Power, Trade, and the UK's Strategic Dilemma</h2>
+            <p class="art-excerpt">How does a post-Brexit Britain navigate the tension between economic sovereignty and global trade dependency? An analysis of the real costs hiding beneath protectionist policy.</p>
+            <span class="art-byline">Edition 01 · Political Economy</span>
           </div>
           <div class="art-sidebar">
-            <div class="sidebar-item">
-              <div class="art-meta"><span class="art-badge">Issue 01</span><span class="art-topic">Policy</span></div>
-              <h3 class="art-title" style="font-size: 1.05rem;">Inequality and the Invisible Hand</h3>
-              <span class="art-byline">Alessa Efridya Ningtyas</span>
-            </div>
-            <div class="sidebar-item">
-              <div class="art-meta"><span class="art-badge">Issue 01</span><span class="art-topic">Global</span></div>
-              <h3 class="art-title" style="font-size: 1.05rem;">Trade Wars and the Cost Nobody Counts</h3>
-              <span class="art-byline">Alex Victoria Shimokawa Razon</span>
-            </div>
-            <div class="sidebar-item">
-              <div class="art-meta"><span class="art-badge">Issue 01</span><span class="art-topic">Society</span></div>
-              <h3 class="art-title" style="font-size: 1.05rem;">When the Data Lies About Poverty</h3>
-              <span class="art-byline">Tusharika Sharma</span>
-            </div>
+            <div class="sidebar-item"><div class="art-meta"><span class="art-badge">Int'l Relations</span></div><h3 class="art-title" style="font-size:1.05rem">The Role of U.S. Military Spending in Economic Power</h3><span class="art-byline">Edition 01</span></div>
+            <div class="sidebar-item"><div class="art-meta"><span class="art-badge">Int'l Relations</span></div><h3 class="art-title" style="font-size:1.05rem">Losing the Edge: Switzerland's Power Dilemma</h3><span class="art-byline">Edition 01</span></div>
+            <div class="sidebar-item"><div class="art-meta"><span class="art-badge">Global Trade</span></div><h3 class="art-title" style="font-size:1.05rem">The Role of the WTO in International Trade Wars</h3><span class="art-byline">Edition 01</span></div>
           </div>
         </article>
-        <!-- Regulars -->
-        <article class="mosaic-cell reveal d1">
-          <div class="art-meta">
-            <span class="art-badge accent">Issue 02</span>
-            <span class="art-topic">New</span>
-          </div>
-          <h3 class="art-title">Climate Economics: Who Pays the Real Price?</h3>
-          <p class="art-excerpt">The cost of inaction has always been externalized onto those least responsible for it.</p>
-          <span class="art-byline">Sameera Vyas</span>
-        </article>
-        <article class="mosaic-cell reveal d2">
-          <div class="art-meta">
-            <span class="art-badge">Issue 01</span>
-            <span class="art-topic">Finance</span>
-          </div>
-          <h3 class="art-title">Central Banks and the Myth of Neutrality</h3>
-          <p class="art-excerpt">Every monetary decision is a political one. The question is who admits it.</p>
-          <span class="art-byline">Rani Ebigael Simanjuntak</span>
-        </article>
-        <article class="mosaic-cell reveal d3">
-          <div class="art-meta">
-            <span class="art-badge accent">Issue 02</span>
-            <span class="art-topic">Labour</span>
-          </div>
-          <h3 class="art-title">Gig Economy: Flexibility for Whom?</h3>
-          <p class="art-excerpt">Platform capitalism rebranded precarity as freedom. A closer look at who really benefits.</p>
-          <span class="art-byline">Isbilya Nathifa Erindra</span>
-        </article>
+        <article class="mosaic-cell reveal d1"><div class="art-meta"><span class="art-badge accent">Behavioural</span></div><h3 class="art-title">How Social Media Platforms Turn Attention into Power</h3><p class="art-excerpt">The attention economy isn't a metaphor. It's a mechanism, and we're all inside it.</p><span class="art-byline">Edition 01</span></article>
+        <article class="mosaic-cell reveal d2"><div class="art-meta"><span class="art-badge">Development</span></div><h3 class="art-title">Indonesia's Economic and Financial Outlook: Balancing Market Volatility and Fiscal Discipline</h3><p class="art-excerpt">A nuanced reading of Southeast Asia's largest economy at a critical inflection point.</p><span class="art-byline">Edition 01</span></article>
+        <article class="mosaic-cell reveal d3"><div class="art-meta"><span class="art-badge accent">Sports &amp; Culture</span></div><h3 class="art-title">The Economic Impact of Hosting Formula 1 on Host Cities</h3><p class="art-excerpt">Beyond the spectacle: who actually captures the value when the circus comes to town?</p><span class="art-byline">Edition 01</span></article>
       </div>
     </div>
   </section>
 
-  <!-- ═══ ABOUT ══════════════════════════════════════════════ -->
+  <!-- ABOUT -->
   <section class="about" id="about">
     <div class="wrap">
-      <div class="section-bar reveal">
-        <span class="eyebrow">About the Zine</span>
-      </div>
+      <div class="section-bar reveal"><span class="eyebrow">About the Zine</span></div>
       <div class="about-grid">
         <div class="reveal">
-          <blockquote class="about-pull">
-            "We value critical thinking over certainty and clarity over complexity."
-          </blockquote>
+          <blockquote class="about-pull">"We value critical thinking over certainty and clarity over complexity."</blockquote>
           <div class="about-body">
             <p>Econify Zine is a student-led youth publication dedicated to making economics more accessible, relevant, and engaging. We bridge the gap between academic economic theory and the real-world issues that shape our lives.</p>
             <p>We publish student-written articles, commentaries, and analyses on current economic, political, and social developments. Through creative storytelling and critical thinking, we amplify youth perspectives in global economic discussions.</p>
@@ -963,159 +495,202 @@
           </div>
         </div>
         <div class="about-pillars reveal d1">
-          <div class="pillar">
-            <div class="pillar-num">01</div>
-            <div class="pillar-title">Accessible by Design</div>
-            <p class="pillar-desc">No jargon. No gatekeeping. Economics belongs to everyone who lives inside it.</p>
+          <div class="pillar"><div class="pillar-num">01</div><div class="pillar-title">Accessible by Design</div><p class="pillar-desc">No jargon. No gatekeeping. Economics belongs to everyone who lives inside it.</p></div>
+          <div class="pillar"><div class="pillar-num">02</div><div class="pillar-title">Question the System</div><p class="pillar-desc">We don't accept economic orthodoxy as neutral. Every model has assumptions worth interrogating.</p></div>
+          <div class="pillar"><div class="pillar-num">03</div><div class="pillar-title">Youth Voices First</div><p class="pillar-desc">These are the perspectives rarely heard in boardrooms or policy debates. They matter most.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER'S NOTE -->
+  <section class="founders-note" id="founders-note">
+    <div class="wrap">
+      <div class="section-bar reveal"><span class="eyebrow">Founder's Note</span></div>
+      <div class="founders-grid">
+        <div class="founders-letter-img reveal">
+          <img src="images/founders-letter.jpg" alt="Founder's letter from Alessa Efridya Ningtyas" loading="lazy">
+        </div>
+        <div class="founders-content reveal d1">
+          <blockquote class="founders-quote">
+            "Power is never free. Nations pay for it with the strength of their institutions. Markets pay for it with uncertainty. Individuals pay for it with trust — the most fragile currency of all."
+          </blockquote>
+          <div class="founders-text">
+            <p>There's a moment, quiet, almost imperceptible, when the world shifts. When you realise that so much of what we call power isn't natural or inevitable, but something far more fragile: a collective agreement. A shared illusion. An arrangement we accept because everyone else seems to accept it too.</p>
+            <p>Econify Zine was born from this moment of questioning — from the desire to understand the real cost of the systems we live in. Our first edition, <em>The Price of Power</em>, is an invitation to look beyond the surface, to trace the hidden lines between influence and inequality, between ambition and accountability.</p>
+            <p>Power behaves like a shadow. It looks tangible, stretches across entire nations, but its shape depends entirely on the light behind it. Change the angle, shift the source, and the shadow transforms. What once seemed stable becomes fragile.</p>
+            <p>Enjoy this issue, and keep questioning.</p>
           </div>
-          <div class="pillar">
-            <div class="pillar-num">02</div>
-            <div class="pillar-title">Question the System</div>
-            <p class="pillar-desc">We don't accept economic orthodoxy as neutral. Every model has assumptions worth interrogating.</p>
-          </div>
-          <div class="pillar">
-            <div class="pillar-num">03</div>
-            <div class="pillar-title">Youth Voices First</div>
-            <p class="pillar-desc">These are the perspectives rarely heard in boardrooms or policy debates. They matter most.</p>
+          <div class="founders-sig">
+            <span class="founders-sig-name">Alessa Efridya Ningtyas</span>
+            <span class="founders-sig-role">Founder &amp; Chief Editor</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ ISSUES ═════════════════════════════════════════════ -->
+  <!-- Q&A FEATURE -->
+  <section class="qa-feature">
+    <div class="wrap">
+      <div class="section-bar reveal" style="border-bottom-color:oklch(25% 0.01 75);margin-bottom:2.5rem;">
+        <span class="eyebrow">Featured in Edition 01</span>
+      </div>
+      <div class="qa-grid">
+        <div class="qa-photo-wrap reveal">
+          <img class="qa-photo" src="images/qa-bhimani.jpg" alt="Professor Alnoor Bhimani" loading="lazy">
+        </div>
+        <div class="reveal d1">
+          <div class="qa-label">Q&amp;A</div>
+          <h2 class="qa-name">Prof. Alnoor Bhimani</h2>
+          <p class="qa-title">Professor of Management Accounting, London School of Economics and Political Science · Former Head of LSE's Department of Accounting · Founding Director of LSE Entrepreneurship</p>
+          <p class="qa-bio">Prof. Bhimani's research deals with financial controls and management, AI and digitilisation aspects of globalisation, governance and economic growth. He sits on university advisory boards across Europe, Africa, America and Asia. He is a Canadian CPA with an MBA from Cornell University and a PhD from LSE.</p>
+          <p class="qa-note">"An invitation to look beyond the surface, to trace the hidden lines between influence and inequality, between the people who rule and the people who suffer the consequences."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ISSUES -->
   <section class="issues" id="issues">
     <div class="wrap">
-      <div class="section-bar reveal">
-        <span class="eyebrow">Our Issues</span>
-      </div>
+      <div class="section-bar reveal"><span class="eyebrow">Our Issues</span></div>
       <div class="issues-grid">
         <!-- Issue 01 -->
         <div class="issue-card reveal">
           <div class="issue-top">
             <div class="issue-big-num" aria-hidden="true">01</div>
-            <div class="issue-meta">
+            <div>
+              <div class="issue-theme">The Price of Power</div>
               <h3 class="issue-title">First Edition</h3>
-              <p class="issue-sub">Our inaugural issue — 16 writers exploring inequality, power, and the economics hiding in plain sight.</p>
+              <p class="issue-sub">16 writers. 6 topic areas. One question: what does power actually cost — and who pays?</p>
             </div>
           </div>
           <div class="writers-label">Writing Team</div>
           <div class="writers">
-            <span class="writer">Alessa Efridya Ningtyas</span>
-            <span class="writer">Alex Victoria Shimokawa Razon</span>
-            <span class="writer">Tusharika Sharma</span>
-            <span class="writer">Sameera Vyas</span>
-            <span class="writer">Rani Ebigael Simanjuntak</span>
-            <span class="writer">Isbilya Nathifa Erindra</span>
-            <span class="writer">Aurelia Permatasari</span>
-            <span class="writer">Cheryl Kirana Sungkono</span>
-            <span class="writer">Rassul Zhunussov</span>
-            <span class="writer">David Abubakirov</span>
-            <span class="writer">Jiyhan Kayfa Zahrah</span>
-            <span class="writer">Gelya Dima</span>
-            <span class="writer">John Kirkman</span>
-            <span class="writer">Elijah Meyer</span>
-            <span class="writer">Nathaniel Tirtawijaya</span>
-            <span class="writer">Adiya Dias</span>
+            <span class="writer">Alessa Efridya Ningtyas</span><span class="writer">Alex Victoria Shimokawa Razon</span><span class="writer">Tusharika Sharma</span><span class="writer">Sameera Vyas</span><span class="writer">Rani Ebigael Simanjuntak</span><span class="writer">Isbilya Nathifa Erindra</span><span class="writer">Aurelia Permatasari</span><span class="writer">Cheryl Kirana Sungkono</span><span class="writer">Rassul Zhunussov</span><span class="writer">David Abubakirov</span><span class="writer">Jiyhan Kayfa Zahrah</span><span class="writer">Gelya Dima</span><span class="writer">John Kirkman</span><span class="writer">Elijah Meyer</span><span class="writer">Nathaniel Tirtawijaya</span><span class="writer">Adiya Dias</span>
           </div>
         </div>
-        <!-- Issue 02 -->
+        <!-- Issue 02 — coming -->
         <div class="issue-card reveal d2">
           <div class="issue-top">
             <div class="issue-big-num" aria-hidden="true">02</div>
-            <div class="issue-meta">
+            <div>
+              <div class="issue-theme" style="color:var(--ink-faint)">Theme TBA</div>
               <h3 class="issue-title">Second Edition</h3>
-              <p class="issue-sub">Growing stronger — 24 writers pushing deeper into the questions that matter.</p>
+              <p class="issue-sub">Growing stronger — 24 writers ready to push deeper into the questions that matter.</p>
             </div>
           </div>
-          <div class="writers-label">Writing Team</div>
-          <div class="writers">
-            <span class="writer">Alessa Efridya Ningtyas</span>
-            <span class="writer">Alex Victoria Shimokawa Razon</span>
-            <span class="writer">Tusharika Sharma</span>
-            <span class="writer">Sameera Vyas</span>
-            <span class="writer">Rani Ebigael Simanjuntak</span>
-            <span class="writer">Isbilya Nathifa Erindra</span>
-            <span class="writer">Aurelia Permatasari</span>
-            <span class="writer">Cheryl Kirana Sungkono</span>
-            <span class="writer">Rassul Zhunussov</span>
-            <span class="writer">David Abubakirov</span>
-            <span class="writer">Jiyhan Kayfa Zahrah</span>
-            <span class="writer">Gelya Dima</span>
-            <span class="writer">John Kirkman</span>
-            <span class="writer">Elijah Meyer</span>
-            <span class="writer">Nathaniel Tirtawijaya</span>
-            <span class="writer">Eshan Kewal</span>
-            <span class="writer">Ameer Hyder</span>
-            <span class="writer">Winston Subali</span>
-            <span class="writer">Michelle Wijaya</span>
-            <span class="writer">Ace</span>
-            <span class="writer">Atha</span>
-            <span class="writer">Madina</span>
-            <span class="writer">Sofia</span>
-            <span class="writer">Adiya Dias</span>
+          <div class="issue-card-coming">
+            <span class="issue-card-coming-label">Coming Soon</span>
+            <span class="issue-card-coming-sub">Writers confirmed · Theme in development</span>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <div class="writers-label">Writing Team</div>
+            <div class="writers">
+              <span class="writer">Alessa Efridya Ningtyas</span><span class="writer">Alex Victoria Shimokawa Razon</span><span class="writer">Tusharika Sharma</span><span class="writer">Sameera Vyas</span><span class="writer">Rani Ebigael Simanjuntak</span><span class="writer">Isbilya Nathifa Erindra</span><span class="writer">Aurelia Permatasari</span><span class="writer">Cheryl Kirana Sungkono</span><span class="writer">Rassul Zhunussov</span><span class="writer">David Abubakirov</span><span class="writer">Jiyhan Kayfa Zahrah</span><span class="writer">Gelya Dima</span><span class="writer">John Kirkman</span><span class="writer">Elijah Meyer</span><span class="writer">Nathaniel Tirtawijaya</span><span class="writer">Eshan Kewal</span><span class="writer">Ameer Hyder</span><span class="writer">Winston Subali</span><span class="writer">Michelle Wijaya</span><span class="writer">Ace</span><span class="writer">Atha</span><span class="writer">Madina</span><span class="writer">Sofia</span><span class="writer">Adiya Dias</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ TEAM ═══════════════════════════════════════════════ -->
+  <!-- TEAM -->
   <section class="team" id="team">
     <div class="wrap">
-      <div class="section-bar reveal">
-        <span class="eyebrow">Meet the Team</span>
-      </div>
+      <div class="section-bar reveal"><span class="eyebrow">Meet the Team</span></div>
       <div class="team-list">
         <div class="member reveal">
-          <span class="member-name">Alessa Efridya Ningtyas</span>
-          <span class="member-role">Founder</span>
+          <div class="member-top"><span class="member-name">Alessa Efridya Ningtyas</span><span class="member-role">Founder &amp; Chief Editor</span></div>
+          <p class="member-bio">Year 12, Jakarta, Indonesia. PPE student who thinks about philosophy before breakfast and economics before bed. Gravitates toward books that question rationality and the complexities of human decision-making — which explains how she ended up creating this magazine.</p>
         </div>
         <div class="member reveal d1">
-          <span class="member-name">Fionna Onggoputri</span>
-          <span class="member-role">Graphic Design</span>
+          <div class="member-top"><span class="member-name">Fionna Onggoputri</span><span class="member-role">Graphic Design</span></div>
+          <p class="member-bio">Grade 10. Strong academic interest in computer science, where she explores how creativity and logical thinking come together to shape innovative projects. Avid gamer — FPS and immersive open-world RPGs — drawing design inspiration from their storytelling.</p>
         </div>
         <div class="member reveal d2">
-          <span class="member-name">Cherisse Tendean</span>
-          <span class="member-role">Editing Team</span>
-        </div>
-        <div class="member reveal d3">
-          <span class="member-name">Fionna Onggoputri</span>
-          <span class="member-role">Editing Team</span>
+          <div class="member-top"><span class="member-name">Cherisse Tendean</span><span class="member-role">Graphic Design &amp; Editing</span></div>
+          <p class="member-bio">Year 12. Combines creative and analytical sides in experimental multimedia art, shifting between whimsical visuals and modern graphic design. Lives in both Indonesia and Australia; collects record players and cassettes, and creates her own music behind-the-scenes.</p>
         </div>
       </div>
-      <p style="margin-top: 2rem; font-size: 0.875rem; color: var(--ink-faint); font-style: italic;">
-        More team members coming soon. Roles for Editor and Social Media currently open.
-      </p>
+
+      <!-- Writers -->
+      <div class="section-bar reveal" style="margin-top:3rem;"><span class="eyebrow">Writing Team — Edition 01</span></div>
+      <div class="writers-grid">
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Alex Victoria Shimokawa Razon</span></div>
+          <p class="writer-row-desc">Grade 11. Focuses on political economy and societal power, analytical thinking and trend analysis. Explores abstract concepts through design, illustration, and discovering new music genres.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Tusharika Sharma</span></div>
+          <p class="writer-row-desc">Grade 12, India. Identifies patterns across geopolitical contexts. Has worked on research projects involving regression models and risk analysis. Western classical pianist.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Sameera Vyas</span></div>
+          <p class="writer-row-desc">Writer and contributor, Edition 01.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Rani Ebigael Simanjuntak</span></div>
+          <p class="writer-row-desc">Grade 12, North Sumatra. Blends analytical curiosity with creative expression. Explores youth culture, technology, and society. Sings in her church choir and volunteers actively in her community.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Isbilya Nathifa Erindra</span></div>
+          <p class="writer-row-desc">Senior high school, South Jakarta. Math and sciences major who taught herself economics independently by exploring concepts and following real-world trends. Unwinds with a classic romcom and hot cocoa.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Aurelia Permatasari</span></div>
+          <p class="writer-row-desc">Grade 12, Tangerang. Economics and astrophysics. Strong in English debate, film analysis, and connecting observations to the concepts she studies. Particular fondness for video essays on YouTube.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Cheryl Kirana Sungkono</span></div>
+          <p class="writer-row-desc">Grade 12. Divides time between psychology textbooks, economics articles, and community projects. Interested in leadership and sustainable fashion. Plays piano, volunteers, loves photography.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Rassul Zhunussov</span></div>
+          <p class="writer-row-desc">Grade 12. Interests lean toward economics, corporate finance and decision-making in complex systems. Known for calm, deliberate approach — breaks down problems with quiet precision.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">David Abubakirov</span></div>
+          <p class="writer-row-desc">Grade 9. Passionate about Economics, Business, and Finance. Enjoys running outdoors, experimenting with small projects, and coming up with new ideas. Thoughtful, with a sense of humour.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Jiyhan Kayfa Zahrah</span></div>
+          <p class="writer-row-desc">Grade 11. From Social Studies Olympiads to a growing obsession with Economics. Volunteers, dances (traditional and modern), sings. Days filled with spontaneous ideas and activities.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Gelya Dima</span></div>
+          <p class="writer-row-desc">Grade 11. Keen interest in finance and economics, natural curiosity for how things work. Mixes creativity with analytical thinking. Goes to concerts, collects travel souvenirs.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">John Kirkman</span></div>
+          <p class="writer-row-desc">Grade 12, Geneva. Finishing Swiss Maturité. Loves the logic of game theory and applying economics to understand the outer world. Completed a 300km cycle ride — which he calls his "ambitious stupidity."</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Elijah Meyer</span></div>
+          <p class="writer-row-desc">First-year university. Jumps between computer science and philosophy, using abstract ideas to question the real world. Passionate about cars — takes his Subaru onto controlled tracks.</p>
+        </div>
+        <div class="writer-row reveal d1">
+          <div class="writer-row-top"><span class="writer-row-name">Nathaniel Tirtawijaya</span></div>
+          <p class="writer-row-desc">Year 12. Spans English, Economics, and Social Sciences. Known for analytical streak and structured writing. Movie-enjoyer. Turns everyday instances into introspections — it's just how he maneuvers through life.</p>
+        </div>
+        <div class="writer-row reveal">
+          <div class="writer-row-top"><span class="writer-row-name">Adiya Dias</span></div>
+          <p class="writer-row-desc">Grade 11. Keen interest in business, economics, and digital platforms. Works on tech and sustainability projects, develops apps. Constantly motivated by challenges — from original concepts to hackathons.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══ JOIN ═══════════════════════════════════════════════ -->
+  <!-- JOIN -->
   <section class="join" id="join">
     <div class="wrap">
       <h2 class="join-headline reveal">Get<br><em>Involved.</em></h2>
-      <p class="join-sub reveal d1">
-        Econify Zine runs on student voices. Whether you write, design, edit, or just have something to say — there's a place here for you.
-      </p>
+      <p class="join-sub reveal d1">Econify Zine runs on student voices. Whether you write, design, edit, or just have something to say — there's a place here for you.</p>
       <div class="join-ways">
-        <div class="way reveal">
-          <div class="way-num">01</div>
-          <h3 class="way-title">Write for Us</h3>
-          <p class="way-desc">Have a take on economics, policy, or the systems shaping your world? We want to hear it.</p>
-          <a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener" class="btn btn-ghost">Apply as Writer →</a>
-        </div>
-        <div class="way reveal d1">
-          <div class="way-num">02</div>
-          <h3 class="way-title">Send Feedback</h3>
-          <p class="way-desc">Tell us what we're missing, what we got wrong, or what resonated. We're listening.</p>
-          <a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener" class="btn btn-ghost">Leave Feedback →</a>
-        </div>
-        <div class="way reveal d2">
-          <div class="way-num">03</div>
-          <h3 class="way-title">Stay Updated</h3>
-          <p class="way-desc">New issues, new voices, new questions. Subscribe and never miss an edition.</p>
-          <a href="mailto:econify.zine@gmail.com" class="btn btn-ghost">Contact Us →</a>
-        </div>
+        <div class="way reveal"><div class="way-num">01</div><h3 class="way-title">Write for Us</h3><p class="way-desc">Have a take on economics, policy, or the systems shaping your world? We want to hear it.</p><a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener" class="btn btn-ghost">Apply as Writer →</a></div>
+        <div class="way reveal d1"><div class="way-num">02</div><h3 class="way-title">Send Feedback</h3><p class="way-desc">Tell us what we're missing, what we got wrong, or what resonated. We're listening.</p><a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener" class="btn btn-ghost">Leave Feedback →</a></div>
+        <div class="way reveal d2"><div class="way-num">03</div><h3 class="way-title">Stay Updated</h3><p class="way-desc">New issues, new voices, new questions. Subscribe and never miss an edition.</p><a href="mailto:econify.zine@gmail.com" class="btn btn-ghost">Contact Us →</a></div>
       </div>
       <div class="newsletter-block reveal d1">
         <div class="newsletter-label">Newsletter — Join the Conversation</div>
@@ -1127,95 +702,29 @@
     </div>
   </section>
 
-  <!-- ═══ FOOTER ═════════════════════════════════════════════ -->
+  <!-- FOOTER -->
   <footer class="footer" id="contact">
     <div class="wrap">
       <div class="footer-grid">
-        <div class="reveal">
-          <div class="footer-logo">ECONIFY<em>.</em>ZINE</div>
-          <p class="footer-desc">A student-led economics publication making theory relevant, accessible, and honest for young people everywhere.</p>
-        </div>
-        <div class="reveal d1">
-          <div class="footer-col-title">Navigate</div>
-          <nav class="footer-links">
-            <a href="#about">About</a>
-            <a href="#issues">Issues</a>
-            <a href="#team">Team</a>
-            <a href="#join">Get Involved</a>
-          </nav>
-        </div>
-        <div class="reveal d2">
-          <div class="footer-col-title">Contact</div>
-          <nav class="footer-links">
-            <a href="mailto:econify.zine@gmail.com">econify.zine@gmail.com</a>
-            <a href="https://instagram.com/econify.zine" target="_blank" rel="noopener">@econify.zine</a>
-            <a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener">Contribute</a>
-            <a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener">Feedback Form</a>
-          </nav>
-        </div>
+        <div class="reveal"><div class="footer-logo">ECONIFY<em>.</em>ZINE</div><p class="footer-desc">A student-led economics publication making theory relevant, accessible, and honest for young people everywhere.</p></div>
+        <div class="reveal d1"><div class="footer-col-title">Navigate</div><nav class="footer-links"><a href="#about">About</a><a href="#edition-01">Edition 01</a><a href="#founders-note">Founder's Note</a><a href="#team">Team</a><a href="#join">Get Involved</a></nav></div>
+        <div class="reveal d2"><div class="footer-col-title">Contact</div><nav class="footer-links"><a href="mailto:econify.zine@gmail.com">econify.zine@gmail.com</a><a href="https://instagram.com/econify.zine" target="_blank" rel="noopener">@econify.zine</a><a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener">Contribute</a><a href="https://forms.gle/ppCfjtMut7tX9bU69" target="_blank" rel="noopener">Feedback Form</a></nav></div>
       </div>
-      <div class="footer-base">
-        <span class="footer-copy">© 2024 Econify Zine. All rights reserved.</span>
-        <div class="footer-socials">
-          <a href="https://instagram.com/econify.zine" target="_blank" rel="noopener">Instagram</a>
-          <a href="mailto:econify.zine@gmail.com">Email</a>
-        </div>
-      </div>
+      <div class="footer-base"><span class="footer-copy">© 2026 Econify Zine. All rights reserved.</span><div class="footer-socials"><a href="https://instagram.com/econify.zine" target="_blank" rel="noopener">Instagram</a><a href="mailto:econify.zine@gmail.com">Email</a></div></div>
     </div>
   </footer>
 
-  <!-- ═══ SCRIPTS ════════════════════════════════════════════ -->
   <script>
-    // Nav shadow on scroll
     const nav = document.getElementById('nav');
     const navCta = document.getElementById('navCta');
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      nav.classList.toggle('lifted', y > 10);
-      navCta.style.display = y > 200 ? 'inline-flex' : 'none';
-    }, { passive: true });
-
-    // Hamburger / drawer
+    window.addEventListener('scroll', () => { const y = window.scrollY; nav.classList.toggle('lifted', y > 10); navCta.style.display = y > 200 ? 'inline-flex' : 'none'; }, { passive: true });
     const hamburger = document.getElementById('hamburger');
-    const drawer    = document.getElementById('drawer');
-    hamburger.addEventListener('click', () => {
-      const open = drawer.classList.toggle('open');
-      hamburger.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    function closeDrawer() {
-      drawer.classList.remove('open');
-      hamburger.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-
-    // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
-    revealEls.forEach(el => io.observe(el));
-
-    // Newsletter (no backend — graceful confirmation)
-    document.getElementById('nlForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn   = document.getElementById('nlBtn');
-      const input = e.target.querySelector('input');
-      btn.textContent = 'You\'re in ✓';
-      btn.style.background = 'oklch(40% 0.14 145)';
-      input.value = '';
-      setTimeout(() => {
-        btn.textContent = 'Subscribe →';
-        btn.style.background = '';
-      }, 3500);
-    });
+    const drawer = document.getElementById('drawer');
+    hamburger.addEventListener('click', () => { const open = drawer.classList.toggle('open'); hamburger.classList.toggle('open', open); hamburger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    function closeDrawer() { drawer.classList.remove('open'); hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
+    const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    document.getElementById('nlForm').addEventListener('submit', (e) => { e.preventDefault(); const btn = document.getElementById('nlBtn'); const input = e.target.querySelector('input'); btn.textContent = "You're in ✓"; btn.style.background = 'oklch(40% 0.14 145)'; input.value = ''; setTimeout(() => { btn.textContent = 'Subscribe →'; btn.style.background = ''; }, 3500); });
   </script>
 </body>
 </html>
